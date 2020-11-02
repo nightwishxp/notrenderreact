@@ -14,4 +14,11 @@ jobs:
             - v4-cargo-cache-{{ arch }}-{{ checksum "Cargo.lock" }}
       - run:
           name: Add wasm32 target
-          command: rustup target add w
+          command: rustup target add wasm32-unknown-unknown
+      - run:
+          name: Build
+          command: cargo wasm --locked
+      - run:
+          name: Unit tests
+          env: RUST_BACKTRACE=1
+          command: cargo 
