@@ -29,4 +29,9 @@ jobs:
           name: Format source code
           command: cargo fmt
       - run:
-          name:
+          name: Build and run schema generator
+          command: cargo schema --locked
+      - run:
+          name: Ensure checked-in source code and schemas are up-to-date
+          command: |
+            CHANGES_IN_REPO=
