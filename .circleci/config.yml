@@ -49,4 +49,4 @@ jobs:
             - target/wasm32-unknown-unknown/release/.fingerprint
             - target/wasm32-unknown-unknown/release/build
             - target/wasm32-unknown-unknown/release/deps
-          key: v4-cargo-ca
+          key: v4-cargo-cache-{{ arch }}-{{ checksum "Cargo.lock" }}
