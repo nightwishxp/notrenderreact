@@ -46,4 +46,7 @@ jobs:
             - target/debug/.fingerprint
             - target/debug/build
             - target/debug/deps
-       
+            - target/wasm32-unknown-unknown/release/.fingerprint
+            - target/wasm32-unknown-unknown/release/build
+            - target/wasm32-unknown-unknown/release/deps
+          key: v4-cargo-ca
