@@ -24,4 +24,15 @@ jobs:
       - name: Run unit tests
         uses: actions-rs/cargo@v1
         with:
-          command: unit-
+          command: unit-test
+          args: --locked
+        env:
+          RUST_BACKTRACE: 1
+
+      - name: Compile WASM contract
+        uses: actions-rs/cargo@v1
+        with:
+          command: wasm
+          args: --locked
+        env:
+          RUS
