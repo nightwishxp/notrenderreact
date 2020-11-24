@@ -73,4 +73,9 @@ jobs:
 
       # TODO: we should check
       # CHANGES_IN_REPO=$(git status --porcelain)
-      # after thi
+      # after this, but I don't know how
+      - name: Generate Schema
+        uses: actions-rs/cargo@v1
+        with:
+          command: schema
+          args: --locked
