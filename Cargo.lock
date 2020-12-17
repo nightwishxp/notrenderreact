@@ -71,4 +71,13 @@ checksum = "3441f0f7b02788e948e47f457ca01f1d7e6d92c693bc132c22b087d3141c03ff"
 name = "bincode2"
 version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-che
+checksum = "f49f6183038e081170ebbbadee6678966c7d54728938a3e7de7f4e780770318f"
+dependencies = [
+ "byteorder",
+ "serde",
+]
+
+[[package]]
+name = "bitflags"
+version = "1.2.1"
+source = "registry+https://github.
