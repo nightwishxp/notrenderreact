@@ -169,4 +169,14 @@ version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7db3d55bfec47df9a54b16dfa87153685e4341459c0b60490a159cfa172f88d3"
 dependencies = [
- "schema
+ "schemars",
+ "serde_json",
+]
+
+[[package]]
+name = "cosmwasm-sgx-vm"
+version = "0.10.0"
+source = "git+https://github.com/enigmampc/SecretNetwork?tag=v1.0.0#490fba9243e6cb291462e9d3c1bcbd1975c0df1e"
+dependencies = [
+ "base64 0.12.3",
+ "
