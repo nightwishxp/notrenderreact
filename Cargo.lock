@@ -179,4 +179,20 @@ version = "0.10.0"
 source = "git+https://github.com/enigmampc/SecretNetwork?tag=v1.0.0#490fba9243e6cb291462e9d3c1bcbd1975c0df1e"
 dependencies = [
  "base64 0.12.3",
- "
+ "cosmwasm-std",
+ "enclave-ffi-types",
+ "hex",
+ "lazy_static",
+ "log",
+ "memmap",
+ "parity-wasm",
+ "schemars",
+ "serde",
+ "serde_json",
+ "sgx_types",
+ "sgx_urts",
+ "sha2 0.9.1",
+ "snafu",
+]
+
+[[p
