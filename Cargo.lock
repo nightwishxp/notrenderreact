@@ -261,4 +261,13 @@ dependencies = [
 [[package]]
 name = "digest"
 version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d3dd60d1080a57a05ab032377049e0591415d2b31afd7028356dbf3cc6dcb066"
+dependencies = [
+ "generic-array 0.14.3",
+]
+
+[[package]]
+name = "doc-comment"
+version = "0.3.3"
+source = "
