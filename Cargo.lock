@@ -474,4 +474,16 @@ dependencies = [
 [[package]]
 name = "rand"
 version = "0.7.3"
-source = "registry+https://github.com/rust-lang
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a6b1679d49b24bbfe0c803429aa1874472f50d9b363131f0e89fc356b544d03"
+dependencies = [
+ "getrandom",
+ "libc",
+ "rand_chacha",
+ "rand_core",
+ "rand_hc",
+]
+
+[[package]]
+name = "rand_chacha"
+ve
