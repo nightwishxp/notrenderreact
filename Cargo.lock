@@ -607,4 +607,14 @@ dependencies = [
 [[package]]
 name = "secret-toolkit-serialization"
 version = "0.1.0"
-source = "git+https://
+source = "git+https://github.com/enigmampc/secret-toolkit?rev=444d918#444d91818411a908425ef3bbf3e0051920b4ce48"
+dependencies = [
+ "bincode2",
+ "cosmwasm-std",
+ "serde",
+]
+
+[[package]]
+name = "secret-toolkit-storage"
+version = "0.1.0"
+sou
