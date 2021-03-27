@@ -631,4 +631,12 @@ version = "0.1.0"
 source = "git+https://github.com/enigmampc/secret-toolkit?rev=444d918#444d91818411a908425ef3bbf3e0051920b4ce48"
 dependencies = [
  "cosmwasm-std",
- "schemar
+ "schemars",
+ "serde",
+]
+
+[[package]]
+name = "serde"
+version = "1.0.114"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5317f7588f0a5078ee60ef675ef96735a1442132dc645eb1d12c018620e
