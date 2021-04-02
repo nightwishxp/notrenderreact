@@ -657,4 +657,14 @@ dependencies = [
 name = "serde_derive"
 version = "1.0.114"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2a0be94b04690fba
+checksum = "2a0be94b04690fbaed37cddffc5c134bf537c8e3329d53e982fe04c374978f8e"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "serde_derive_internals"
+version = "0.25.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
