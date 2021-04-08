@@ -721,4 +721,13 @@ dependencies = [
  "block-buffer 0.9.0",
  "cfg-if",
  "cpuid-bool",
- "digest
+ "digest 0.9.0",
+ "opaque-debug 0.3.0",
+]
+
+[[package]]
+name = "snafu"
+version = "0.6.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c7f5aed652511f5c9123cf2afbe9c244c29db6effa2abb05c866e965c82405ce"
+depen
