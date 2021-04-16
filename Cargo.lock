@@ -810,4 +810,9 @@ dependencies = [
 
 [[package]]
 name = "thiserror-impl"
-v
+version = "1.0.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bd80fc12f73063ac132ac92aceea36734f04a1d93c1240c6944e23a3b8841793"
+dependencies = [
+ "proc-macro2",
+ 
