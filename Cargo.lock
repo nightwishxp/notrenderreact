@@ -802,4 +802,12 @@ dependencies = [
 [[package]]
 name = "thiserror"
 version = "1.0.20"
-source = "r
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7dfdd070ccd8ccb78f4ad66bf1982dc37f620ef696c6b5028fe2ed83dd3d0d08"
+dependencies = [
+ "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-impl"
+v
