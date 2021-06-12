@@ -7,4 +7,14 @@ all: clippy test
 check:
 	cargo check
 
-.PHONY: check
+.PHONY: check-receiver
+check-receiver:
+	$(MAKE) -C tests/example-receiver check
+
+.PHONY: clippy
+clippy:
+	cargo clippy
+
+.PHONY: clippy-receiver
+clippy-receiver:
+	$(MAKE) -C tests/example-receiver clipp
