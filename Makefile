@@ -39,4 +39,10 @@ compile-optimized-receiver:
 
 .PHONY: list-code
 list-code:
-	$(SECRETCL
+	$(SECRETCLI) query compute list-code
+
+.PHONY: compile _compile
+compile: _compile contract.wasm.gz
+_compile:
+	cargo build --target wasm32-unknown-unknown --locked
+	cp ./target/wasm32-unknown-unknown/d
