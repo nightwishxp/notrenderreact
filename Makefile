@@ -30,4 +30,13 @@ unit-test:
 unit-test-receiver:
 	$(MAKE) -C tests/example-receiver unit-test
 
-.PHONY: integration-
+.PHONY: integration-test
+integration-test: compile-optimized compile-optimized-receiver
+	tests/integration.sh
+
+compile-optimized-receiver:
+	$(MAKE) -C tests/example-receiver compile-optimized
+
+.PHONY: list-code
+list-code:
+	$(SECRETCL
