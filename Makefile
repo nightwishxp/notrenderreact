@@ -45,4 +45,9 @@ list-code:
 compile: _compile contract.wasm.gz
 _compile:
 	cargo build --target wasm32-unknown-unknown --locked
-	cp ./target/wasm32-unknown-unknown/d
+	cp ./target/wasm32-unknown-unknown/debug/*.wasm ./contract.wasm
+
+.PHONY: compile-optimized _compile-optimized
+compile-optimized: _compile-optimized contract.wasm.gz
+_compile-optimized:
+	RUSTFLAGS='-C link-arg=-s' cargo build --release --target wasm32-u
