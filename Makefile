@@ -54,4 +54,8 @@ _compile-optimized:
 	@# The following line is not necessary, may work only on linux (extra size optimization)
 	wasm-opt -Os ./target/wasm32-unknown-unknown/release/*.wasm -o ./contract.wasm
 
-.PHONY: com
+.PHONY: compile-optimized-reproducible
+compile-optimized-reproducible:
+	docker run --rm -v "$$(pwd)":/contract \
+		--mount type=volume,source="$$(basename "$$(pwd)")_cache",target=/code/target \
+		--mount type=volume,source=reg
