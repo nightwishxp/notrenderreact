@@ -73,4 +73,10 @@ start-server: # CTRL+C to stop
 
 .PHONY: schema
 schema:
-	cargo run --exampl
+	cargo run --example schema
+
+.PHONY: clean
+clean:
+	cargo clean
+	rm -f ./contract.wasm ./contract.wasm.gz
+	$(MAKE) -C tests/example-receiver clean
