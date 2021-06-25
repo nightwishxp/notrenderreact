@@ -21,4 +21,7 @@ repository = "https://github.com/confio/cosmwasm-examples"
 
 You will also want to add a valid [SPDX license statement](https://spdx.org/licenses/),
 so others know the rules for using this crate. You can use any license you wish,
-even 
+even a commercial license, but we recommend choosing one of the following, unless you have
+specific requirements.
+
+* Permissive: [`Apache-2.0`](https://spdx.org/licenses/Apache-2.0.html#licenseText) or [`MIT`](https://spdx.org/licenses/
