@@ -29,4 +29,16 @@ specific requirements.
 * Commercial license: `Commercial` (not sure if this works, I cannot find examples)
 
 It is also helpful to download the LICENSE text (linked to above) and store this
-in a LICENSE file in your repo. Now, you have properly configured your crat
+in a LICENSE file in your repo. Now, you have properly configured your crate for use
+in a larger ecosystem.
+
+### Updating schema
+
+To allow easy use of the contract, we can publish the schema (`schema/*.json`) together
+with the source code.
+
+```sh
+cargo schema
+```
+
+Ensure you c
