@@ -26,4 +26,7 @@ specific requirements.
 
 * Permissive: [`Apache-2.0`](https://spdx.org/licenses/Apache-2.0.html#licenseText) or [`MIT`](https://spdx.org/licenses/MIT.html#licenseText)
 * Copyleft: [`GPL-3.0-or-later`](https://spdx.org/licenses/GPL-3.0-or-later.html#licenseText) or [`AGPL-3.0-or-later`](https://spdx.org/licenses/AGPL-3.0-or-later.html#licenseText)
-* Commercial license: `
+* Commercial license: `Commercial` (not sure if this works, I cannot find examples)
+
+It is also helpful to download the LICENSE text (linked to above) and store this
+in a LICENSE file in your repo. Now, you have properly configured your crat
