@@ -41,4 +41,6 @@ with the source code.
 cargo schema
 ```
 
-Ensure you c
+Ensure you check in all the schema files, and make a git commit with the final state.
+This commit will be published and should be tagged. Generally, you will want to
+tag with the version (eg. `v0.1.0`), but in the
