@@ -43,4 +43,10 @@ cargo schema
 
 Ensure you check in all the schema files, and make a git commit with the final state.
 This commit will be published and should be tagged. Generally, you will want to
-tag with the version (eg. `v0.1.0`), but in the
+tag with the version (eg. `v0.1.0`), but in the `cosmwasm-examples` repo, we have
+multiple contracts and label it like `escrow-0.1.0`. Don't forget a
+`git push && git push --tags`
+
+### Note on build results
+
+Build results like Wasm bytecode or expected hash don
