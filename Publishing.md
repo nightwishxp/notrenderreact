@@ -58,4 +58,10 @@ exclude = ["contract.wasm", "hash.txt"]
 ```
 
 A single source code can be built with multiple different optimizers, so
-we should not make any strict assumptions on the 
+we should not make any strict assumptions on the tooling that will be used.
+
+## Publishing
+
+Now that your package is properly configured and all artifacts are committed, it
+is time to share it with the world.
+Please refer to the [complete instructions for an
