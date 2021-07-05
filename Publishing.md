@@ -64,4 +64,9 @@ we should not make any strict assumptions on the tooling that will be used.
 
 Now that your package is properly configured and all artifacts are committed, it
 is time to share it with the world.
-Please refer to the [complete instructions for an
+Please refer to the [complete instructions for any questions](https://rurust.github.io/cargo-docs-ru/crates-io.html),
+but I will try to give a quick overview of the happy path here.
+
+### Registry
+
+You will need an account on [crates.io](https://c
