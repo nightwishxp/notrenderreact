@@ -69,4 +69,7 @@ but I will try to give a quick overview of the happy path here.
 
 ### Registry
 
-You will need an account on [crates.io](https://c
+You will need an account on [crates.io](https://crates.io) to publish a rust crate.
+If you don't have one already, just click on "Log in with GitHub" in the top-right
+to quickly set up a free account. Once inside, click on your username (top-right),
+then
