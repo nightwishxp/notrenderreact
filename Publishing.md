@@ -74,4 +74,10 @@ If you don't have one already, just click on "Log in with GitHub" in the top-rig
 to quickly set up a free account. Once inside, click on your username (top-right),
 then "Account Settings". On the bottom, there is a section called "API Access".
 If you don't have this set up already, create a new token and use `cargo login`
-to set it up. This will now authenticate you 
+to set it up. This will now authenticate you with the `cargo` cli tool and allow
+you to publish.
+
+### Uploading
+
+Once this is set up, make sure you commit the current state you want to publish.
+Then try `cargo publish --dry-run`. If that works well, revi
