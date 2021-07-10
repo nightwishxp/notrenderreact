@@ -80,4 +80,8 @@ you to publish.
 ### Uploading
 
 Once this is set up, make sure you commit the current state you want to publish.
-Then try `cargo publish --dry-run`. If that works well, revi
+Then try `cargo publish --dry-run`. If that works well, review the files that
+will be published via `cargo package --list`. If you are satisfied, you can now
+officially publish it via `cargo publish`.
+
+Congratulations, your package is public to the world.
