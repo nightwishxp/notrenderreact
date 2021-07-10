@@ -91,4 +91,9 @@ Congratulations, your package is public to the world.
 Once you have published your package, people can now find it by
 [searching for "cw-" on crates.io](https://crates.io/search?q=cw).
 But that isn't exactly the simplest way. To make things easier and help
-keep the ecosys
+keep the ecosystem together, we suggest making a PR to add your package
+to the [`cawesome-wasm`](https://github.com/cosmwasm/cawesome-wasm) list.
+
+### Organizations
+
+Many times you are writing a contract not as a solo dev
