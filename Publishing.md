@@ -85,3 +85,10 @@ will be published via `cargo package --list`. If you are satisfied, you can now
 officially publish it via `cargo publish`.
 
 Congratulations, your package is public to the world.
+
+### Sharing
+
+Once you have published your package, people can now find it by
+[searching for "cw-" on crates.io](https://crates.io/search?q=cw).
+But that isn't exactly the simplest way. To make things easier and help
+keep the ecosys
