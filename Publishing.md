@@ -99,4 +99,9 @@ to the [`cawesome-wasm`](https://github.com/cosmwasm/cawesome-wasm) list.
 Many times you are writing a contract not as a solo developer, but rather as
 part of an organization. You will want to allow colleagues to upload new
 versions of the contract to crates.io when you are on holiday.
-[These instructions show how]() you can set up your crat
+[These instructions show how]() you can set up your crate to allow multiple maintainers.
+
+You can add another owner to the crate by specifying their github user. Note, you will
+now both have complete control of the crate, and they can remove you:
+
+`carg
