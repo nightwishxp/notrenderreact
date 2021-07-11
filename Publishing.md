@@ -104,4 +104,10 @@ versions of the contract to crates.io when you are on holiday.
 You can add another owner to the crate by specifying their github user. Note, you will
 now both have complete control of the crate, and they can remove you:
 
-`carg
+`cargo owner --add ethanfrey`
+
+You can also add an existing github team inside your organization:
+
+`cargo owner --add github:confio:developers`
+
+The team will allow anyone who is currently in the team to publish new versions of the c
