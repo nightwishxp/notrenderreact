@@ -110,4 +110,6 @@ You can also add an existing github team inside your organization:
 
 `cargo owner --add github:confio:developers`
 
-The team will allow anyone who is currently in the team to publish new versions of the c
+The team will allow anyone who is currently in the team to publish new versions of the crate.
+And this is automatically updated when you make changes on github. However, it will not allow
+anyone in the team to add or remove other owners.
