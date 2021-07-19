@@ -349,3 +349,22 @@
       }
     }
   ],
+  "definitions": {
+    "HumanAddr": {
+      "type": "string"
+    },
+    "ResponseStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failure"
+      ]
+    },
+    "Uint128": {
+      "type": "string"
+    },
+    "ViewingKey": {
+      "type": "string"
+    }
+  }
+}
