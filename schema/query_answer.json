@@ -228,3 +228,17 @@
       "properties": {
         "coins": {
           "$ref": "#/definitions/Coin"
+        },
+        "receiver": {
+          "$ref": "#/definitions/HumanAddr"
+        },
+        "sender": {
+          "$ref": "#/definitions/HumanAddr"
+        }
+      }
+    },
+    "Uint128": {
+      "type": "string"
+    }
+  }
+}
