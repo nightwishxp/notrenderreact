@@ -14,4 +14,9 @@ use crate::msg::{
 use crate::receiver::Snip20ReceiveMsg;
 use crate::state::{
     get_receiver_hash, get_transfers, read_allowance, read_viewing_key, set_receiver_hash,
-    store_transfer, write_allowance
+    store_transfer, write_allowance, write_viewing_key, Balances, Config, Constants,
+    ReadonlyBalances, ReadonlyConfig,
+};
+use crate::viewing_key::{ViewingKey, VIEWING_KEY_SIZE};
+
+/// We make sure that responses from `handle` are padded to a multiple of this siz
