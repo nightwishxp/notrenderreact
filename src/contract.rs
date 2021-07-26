@@ -19,4 +19,12 @@ use crate::state::{
 };
 use crate::viewing_key::{ViewingKey, VIEWING_KEY_SIZE};
 
-/// We make sure that responses from `handle` are padded to a multiple of this siz
+/// We make sure that responses from `handle` are padded to a multiple of this size.
+pub const RESPONSE_BLOCK_SIZE: usize = 256;
+
+pub fn init<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    msg: InitMsg,
+) -> StdResult<InitResponse> {
+    let init_con
