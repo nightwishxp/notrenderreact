@@ -27,4 +27,8 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
     env: Env,
     msg: InitMsg,
 ) -> StdResult<InitResponse> {
-    let init_con
+    let init_config = msg.config();
+    let mut total_supply: u128 = 0;
+    {
+        let mut balances = Balances::from_storage(&mut deps.storage);
+        let initial_balances = msg.initial_balances.unwrap
