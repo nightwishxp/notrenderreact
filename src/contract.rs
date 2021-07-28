@@ -35,4 +35,7 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
         for balance in initial_balances {
             let balance_address = deps.api.canonical_address(&balance.address)?;
             let amount = balance.amount.u128();
- 
+            balances.set_account_balance(&balance_address, amount);
+            if let Some(new_total_supply) = total_supply.checked_add(amount) {
+                total_supply = new_total_supply;
+            } els
