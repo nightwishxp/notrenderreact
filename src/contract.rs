@@ -38,4 +38,9 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
             balances.set_account_balance(&balance_address, amount);
             if let Some(new_total_supply) = total_supply.checked_add(amount) {
                 total_supply = new_total_supply;
-            } els
+            } else {
+                return Err(StdError::generic_err(
+                    "The sum of all initial balances exceeds the maximum possible total supply",
+                ));
+            }
+ 
