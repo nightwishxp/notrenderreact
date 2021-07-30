@@ -43,4 +43,10 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
                     "The sum of all initial balances exceeds the maximum possible total supply",
                 ));
             }
- 
+        }
+    }
+
+    // Check name, symbol, decimals
+    if !is_valid_name(&msg.name) {
+        return Err(StdError::generic_err(
+            "Name is not in the expected format (3-30 UTF-8 bytes)",
