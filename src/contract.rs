@@ -50,3 +50,11 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
     if !is_valid_name(&msg.name) {
         return Err(StdError::generic_err(
             "Name is not in the expected format (3-30 UTF-8 bytes)",
+        ));
+    }
+    if !is_valid_symbol(&msg.symbol) {
+        return Err(StdError::generic_err(
+            "Ticker symbol is not in expected format [A-Z]{3,6}",
+        ));
+    }
+    if msg.decimals > 18 
