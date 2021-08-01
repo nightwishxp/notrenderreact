@@ -65,4 +65,10 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
 
     let prng_seed_hashed = sha_256(&msg.prng_seed.0);
 
-    let mut co
+    let mut config = Config::from_storage(&mut deps.storage);
+    config.set_constants(&Constants {
+        name: msg.name,
+        symbol: msg.symbol,
+        decimals: msg.decimals,
+        admin,
+        prng_seed: prng_seed_hashe
