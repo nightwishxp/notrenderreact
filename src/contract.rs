@@ -57,4 +57,12 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
             "Ticker symbol is not in expected format [A-Z]{3,6}",
         ));
     }
-    if msg.decimals > 18 
+    if msg.decimals > 18 {
+        return Err(StdError::generic_err("Decimals must not exceed 18"));
+    }
+
+    let admin = msg.admin.unwrap_or_else(|| env.message.sender);
+
+    let prng_seed_hashed = sha_256(&msg.prng_seed.0);
+
+    let mut co
