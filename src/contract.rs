@@ -71,4 +71,10 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
         symbol: msg.symbol,
         decimals: msg.decimals,
         admin,
-        prng_seed: prng_seed_hashe
+        prng_seed: prng_seed_hashed.to_vec(),
+        total_supply_is_public: init_config.public_total_supply(),
+    })?;
+    config.set_total_supply(total_supply);
+    config.set_contract_status(ContractStatusLevel::NormalRun);
+
+   
