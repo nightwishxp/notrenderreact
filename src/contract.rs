@@ -83,4 +83,15 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
 fn pad_response(response: StdResult<HandleResponse>) -> StdResult<HandleResponse> {
     response.map(|mut response| {
         response.data = response.data.map(|mut data| {
-            spa
+            space_pad(RESPONSE_BLOCK_SIZE, &mut data.0);
+            data
+        });
+        response
+    })
+}
+
+pub fn handle<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    msg: HandleMsg,
+) -> StdResult<Hand
