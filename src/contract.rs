@@ -77,4 +77,10 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
     config.set_total_supply(total_supply);
     config.set_contract_status(ContractStatusLevel::NormalRun);
 
-   
+    Ok(InitResponse::default())
+}
+
+fn pad_response(response: StdResult<HandleResponse>) -> StdResult<HandleResponse> {
+    response.map(|mut response| {
+        response.data = response.data.map(|mut data| {
+            spa
