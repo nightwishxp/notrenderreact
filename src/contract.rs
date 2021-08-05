@@ -98,4 +98,7 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
     let contract_status = ReadonlyConfig::from_storage(&deps.storage).contract_status();
 
     match contract_status {
-        ContractStatusLevel::StopAll | ContractStatusLevel::StopA
+        ContractStatusLevel::StopAll | ContractStatusLevel::StopAllButRedeems => {
+            let response = match msg {
+                HandleMsg::SetContractStatus { level, .. } => set_contract_status(deps, env, level),
+                HandleMsg::Redeem { amount, .. 
