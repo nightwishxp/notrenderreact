@@ -94,4 +94,8 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
     msg: HandleMsg,
-) -> StdResult<Hand
+) -> StdResult<HandleResponse> {
+    let contract_status = ReadonlyConfig::from_storage(&deps.storage).contract_status();
+
+    match contract_status {
+        ContractStatusLevel::StopAll | ContractStatusLevel::StopA
