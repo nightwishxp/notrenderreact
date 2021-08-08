@@ -101,4 +101,9 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
         ContractStatusLevel::StopAll | ContractStatusLevel::StopAllButRedeems => {
             let response = match msg {
                 HandleMsg::SetContractStatus { level, .. } => set_contract_status(deps, env, level),
-                HandleMsg::Redeem { amount, .. 
+                HandleMsg::Redeem { amount, .. }
+                    if contract_status == ContractStatusLevel::StopAllButRedeems =>
+                {
+                    try_redeem(deps, env, amount)
+                }
+                _ => Err(StdError::
