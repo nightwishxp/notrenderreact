@@ -112,4 +112,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             };
             return pad_response(response);
         }
-        ContractStatusLevel::NormalR
+        ContractStatusLevel::NormalRun => {} // If it's a normal run just continue
+    }
+
+    let response = match msg {
+        // Native
+        HandleMsg::Deposit { .. } => try_deposit(deps, env),
+        HandleMsg::Redeem { amount, 
