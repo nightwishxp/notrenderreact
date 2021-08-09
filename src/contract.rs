@@ -106,4 +106,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
                 {
                     try_redeem(deps, env, amount)
                 }
-                _ => Err(StdError::
+                _ => Err(StdError::generic_err(
+                    "This contract is stopped and this action is not allowed",
+                )),
+            };
+            return pad_response(response);
+        }
+        ContractStatusLevel::NormalR
