@@ -118,4 +118,11 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
     let response = match msg {
         // Native
         HandleMsg::Deposit { .. } => try_deposit(deps, env),
-        HandleMsg::Redeem { amount, 
+        HandleMsg::Redeem { amount, .. } => try_redeem(deps, env, amount),
+
+        // Base
+        HandleMsg::Transfer {
+            recipient, amount, ..
+        } => try_transfer(deps, env, &recipient, amount),
+        HandleMsg::Send {
+            r
