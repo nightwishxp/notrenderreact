@@ -125,4 +125,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             recipient, amount, ..
         } => try_transfer(deps, env, &recipient, amount),
         HandleMsg::Send {
-            r
+            recipient,
+            amount,
+            msg,
+            ..
+        } => try_send(deps, env, &recipient, amount, msg),
+        HandleMsg::RegisterReceive { code_hash, .. } => try_register_receive(deps, env, code_hash),
+  
