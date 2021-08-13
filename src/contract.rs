@@ -131,4 +131,7 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             ..
         } => try_send(deps, env, &recipient, amount, msg),
         HandleMsg::RegisterReceive { code_hash, .. } => try_register_receive(deps, env, code_hash),
-  
+        HandleMsg::CreateViewingKey { entropy, .. } => try_create_key(deps, env, entropy),
+        HandleMsg::SetViewingKey { key, .. } => try_set_key(deps, env, key),
+
+        // 
