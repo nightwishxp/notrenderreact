@@ -134,4 +134,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
         HandleMsg::CreateViewingKey { entropy, .. } => try_create_key(deps, env, entropy),
         HandleMsg::SetViewingKey { key, .. } => try_set_key(deps, env, key),
 
-        // 
+        // Allowance
+        HandleMsg::IncreaseAllowance {
+            spender,
+            amount,
+            expiration,
+            ..
+        } => try_increase_allowance(deps, env, spender, amoun
