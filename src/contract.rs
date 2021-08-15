@@ -140,4 +140,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             amount,
             expiration,
             ..
-        } => try_increase_allowance(deps, env, spender, amoun
+        } => try_increase_allowance(deps, env, spender, amount, expiration),
+        HandleMsg::DecreaseAllowance {
+            spender,
+            amount,
+            expiration,
+            ..
+        } => try_decrease_allowance(deps, env, spender, amount, ex
