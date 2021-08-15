@@ -146,4 +146,11 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             amount,
             expiration,
             ..
-        } => try_decrease_allowance(deps, env, spender, amount, ex
+        } => try_decrease_allowance(deps, env, spender, amount, expiration),
+        HandleMsg::TransferFrom {
+            owner,
+            recipient,
+            amount,
+            ..
+        } => try_transfer_from(deps, env, &owner, &recipient, amount),
+        HandleMsg::SendFr
