@@ -153,4 +153,13 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             amount,
             ..
         } => try_transfer_from(deps, env, &owner, &recipient, amount),
-        HandleMsg::SendFr
+        HandleMsg::SendFrom {
+            owner,
+            recipient,
+            amount,
+            msg,
+            ..
+        } => try_send_from(deps, env, &owner, &recipient, amount, msg),
+
+        // Other
+        Hand
