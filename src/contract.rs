@@ -166,4 +166,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
         HandleMsg::SetContractStatus { level, .. } => set_contract_status(deps, env, level),
     };
 
-    pad_response(respon
+    pad_response(response)
+}
+
+pub fn query<S: Storage, A: Api, Q: Querier>(deps: &Extern<S, A, Q>, msg: QueryMsg) -> QueryResult {
+    match msg {
+        QueryMsg::TokenInfo {} => query_token_info(&deps.storage),
+   
