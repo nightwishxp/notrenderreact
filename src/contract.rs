@@ -162,4 +162,8 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
         } => try_send_from(deps, env, &owner, &recipient, amount, msg),
 
         // Other
-        Hand
+        HandleMsg::ChangeAdmin { address, .. } => change_admin(deps, env, address),
+        HandleMsg::SetContractStatus { level, .. } => set_contract_status(deps, env, level),
+    };
+
+    pad_response(respon
