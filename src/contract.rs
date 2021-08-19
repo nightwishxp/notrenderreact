@@ -172,4 +172,11 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
 pub fn query<S: Storage, A: Api, Q: Querier>(deps: &Extern<S, A, Q>, msg: QueryMsg) -> QueryResult {
     match msg {
         QueryMsg::TokenInfo {} => query_token_info(&deps.storage),
-   
+        QueryMsg::ExchangeRate {} => query_exchange_rate(),
+        _ => authenticated_queries(deps, msg),
+    }
+}
+
+pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
+    deps: &Extern<S, A, Q>,
+    ms
