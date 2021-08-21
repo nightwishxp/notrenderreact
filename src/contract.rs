@@ -186,4 +186,8 @@ pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
     for address in addresses {
         let canonical_addr = deps.api.canonical_address(address)?;
 
-        let expected_key = read_vie
+        let expected_key = read_viewing_key(&deps.storage, &canonical_addr);
+
+        if expected_key.is_none() {
+            // Checking the key will take significant time. We don't want to exit immediately if it isn't set
+            // in a way which wi
