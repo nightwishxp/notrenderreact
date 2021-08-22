@@ -190,4 +190,6 @@ pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
 
         if expected_key.is_none() {
             // Checking the key will take significant time. We don't want to exit immediately if it isn't set
-            // in a way which wi
+            // in a way which will allow to time the command and determine if a viewing key doesn't exist
+            key.check_viewing_key(&[0u8; VIEWING_KEY_SIZE]);
+        } else if key.check_viewing_key(expected_key.
