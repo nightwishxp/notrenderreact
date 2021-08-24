@@ -201,4 +201,8 @@ pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
                     page,
                     page_size,
                     ..
-                } => query_transactions(&deps, &address, page.unwrap_or(0), page_si
+                } => query_transactions(&deps, &address, page.unwrap_or(0), page_size),
+                QueryMsg::Allowance { owner, spender, .. } => {
+                    try_check_allowance(deps, owner, spender)
+                }
+                _ => panic!("This query type does not require authentication
