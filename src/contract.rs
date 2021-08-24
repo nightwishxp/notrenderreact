@@ -196,4 +196,9 @@ pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
             return match msg {
                 // Base
                 QueryMsg::Balance { address, .. } => query_balance(&deps, &address),
-                QueryMsg::TransferHi
+                QueryMsg::TransferHistory {
+                    address,
+                    page,
+                    page_size,
+                    ..
+                } => query_transactions(&deps, &address, page.unwrap_or(0), page_si
