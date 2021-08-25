@@ -215,4 +215,9 @@ pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
     })?)
 }
 
-/// This function just r
+/// This function just returns a constant 1:1 rate to uscrt, since that's the purpose of this
+/// contract.
+fn query_exchange_rate() -> QueryResult {
+    to_binary(&QueryAnswer::ExchangeRate {
+        rate: Uint128(1),
+        denom:
