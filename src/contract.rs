@@ -205,4 +205,14 @@ pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
                 QueryMsg::Allowance { owner, spender, .. } => {
                     try_check_allowance(deps, owner, spender)
                 }
-                _ => panic!("This query type does not require authentication
+                _ => panic!("This query type does not require authentication"),
+            };
+        }
+    }
+
+    Ok(to_binary(&QueryAnswer::ViewingKeyError {
+        msg: "Wrong viewing key for this address or viewing key not set".to_string(),
+    })?)
+}
+
+/// This function just r
