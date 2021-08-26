@@ -220,4 +220,12 @@ pub fn authenticated_queries<S: Storage, A: Api, Q: Querier>(
 fn query_exchange_rate() -> QueryResult {
     to_binary(&QueryAnswer::ExchangeRate {
         rate: Uint128(1),
-        denom:
+        denom: "uscrt".to_string(),
+    })
+}
+
+fn query_token_info<S: ReadonlyStorage>(storage: &S) -> QueryResult {
+    let config = ReadonlyConfig::from_storage(storage);
+    let constants = config.constants()?;
+
+    l
