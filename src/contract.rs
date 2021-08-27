@@ -228,4 +228,11 @@ fn query_token_info<S: ReadonlyStorage>(storage: &S) -> QueryResult {
     let config = ReadonlyConfig::from_storage(storage);
     let constants = config.constants()?;
 
-    l
+    let total_supply = if constants.total_supply_is_public {
+        Some(Uint128(config.total_supply()))
+    } else {
+        None
+    };
+
+    to_binary(&QueryAnswer::TokenInfo {
+        name: constants.name
