@@ -235,4 +235,14 @@ fn query_token_info<S: ReadonlyStorage>(storage: &S) -> QueryResult {
     };
 
     to_binary(&QueryAnswer::TokenInfo {
-        name: constants.name
+        name: constants.name,
+        symbol: constants.symbol,
+        decimals: constants.decimals,
+        total_supply,
+    })
+}
+
+pub fn query_transactions<S: Storage, A: Api, Q: Querier>(
+    deps: &Extern<S, A, Q>,
+    account: &HumanAddr,
+  
