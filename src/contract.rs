@@ -245,4 +245,10 @@ fn query_token_info<S: ReadonlyStorage>(storage: &S) -> QueryResult {
 pub fn query_transactions<S: Storage, A: Api, Q: Querier>(
     deps: &Extern<S, A, Q>,
     account: &HumanAddr,
-  
+    page: u32,
+    page_size: u32,
+) -> StdResult<Binary> {
+    let address = deps.api.canonical_address(account).unwrap();
+    let txs = get_transfers(&deps.api, &deps.storage, &address, page, page_size)?;
+
+    le
