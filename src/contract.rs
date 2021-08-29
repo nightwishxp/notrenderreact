@@ -259,4 +259,8 @@ pub fn query_balance<S: Storage, A: Api, Q: Querier>(
     deps: &Extern<S, A, Q>,
     account: &HumanAddr,
 ) -> StdResult<Binary> {
-    let address 
+    let address = deps.api.canonical_address(account)?;
+
+    let amount = Uint128(ReadonlyBalances::from_storage(&deps.storage).account_amount(&address));
+    let response = QueryAnswer::Balance { amount };
+    to_binary(&response
