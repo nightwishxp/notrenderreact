@@ -251,4 +251,12 @@ pub fn query_transactions<S: Storage, A: Api, Q: Querier>(
     let address = deps.api.canonical_address(account).unwrap();
     let txs = get_transfers(&deps.api, &deps.storage, &address, page, page_size)?;
 
-    le
+    let result = QueryAnswer::TransferHistory { txs };
+    to_binary(&result)
+}
+
+pub fn query_balance<S: Storage, A: Api, Q: Querier>(
+    deps: &Extern<S, A, Q>,
+    account: &HumanAddr,
+) -> StdResult<Binary> {
+    let address 
