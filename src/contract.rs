@@ -263,4 +263,14 @@ pub fn query_balance<S: Storage, A: Api, Q: Querier>(
 
     let amount = Uint128(ReadonlyBalances::from_storage(&deps.storage).account_amount(&address));
     let response = QueryAnswer::Balance { amount };
-    to_binary(&response
+    to_binary(&response)
+}
+
+fn change_admin<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    address: HumanAddr,
+) -> StdResult<HandleResponse> {
+    let mut config = Config::from_storage(&mut deps.storage);
+
+  
