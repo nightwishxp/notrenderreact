@@ -273,4 +273,13 @@ fn change_admin<S: Storage, A: Api, Q: Querier>(
 ) -> StdResult<HandleResponse> {
     let mut config = Config::from_storage(&mut deps.storage);
 
-  
+    check_if_admin(&config, &env.message.sender)?;
+
+    let mut consts = config.constants()?;
+    consts.admin = address;
+    config.set_constants(&consts)?;
+
+    Ok(HandleResponse {
+        messages: vec![],
+        log: vec![],
+       
