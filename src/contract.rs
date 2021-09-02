@@ -282,4 +282,12 @@ fn change_admin<S: Storage, A: Api, Q: Querier>(
     Ok(HandleResponse {
         messages: vec![],
         log: vec![],
-       
+        data: Some(to_binary(&HandleAnswer::ChangeAdmin { status: Success })?),
+    })
+}
+
+pub fn try_set_key<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    key: String,
+) -> StdR
