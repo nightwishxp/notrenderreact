@@ -290,4 +290,11 @@ pub fn try_set_key<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
     key: String,
-) -> StdR
+) -> StdResult<HandleResponse> {
+    let vk = ViewingKey(key);
+
+    let message_sender = deps.api.canonical_address(&env.message.sender)?;
+    write_viewing_key(&mut deps.storage, &message_sender, &vk);
+
+    Ok(HandleResponse {
+        mes
