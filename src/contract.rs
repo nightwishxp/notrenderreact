@@ -305,4 +305,10 @@ pub fn try_set_key<S: Storage, A: Api, Q: Querier>(
 
 pub fn try_create_key<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
-    env:
+    env: Env,
+    entropy: String,
+) -> StdResult<HandleResponse> {
+    let constants = ReadonlyConfig::from_storage(&deps.storage).constants()?;
+    let prng_seed = constants.prng_seed;
+
+    let key = ViewingKey::new(&env, &prng_seed
