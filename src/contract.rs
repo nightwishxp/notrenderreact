@@ -297,4 +297,12 @@ pub fn try_set_key<S: Storage, A: Api, Q: Querier>(
     write_viewing_key(&mut deps.storage, &message_sender, &vk);
 
     Ok(HandleResponse {
-        mes
+        messages: vec![],
+        log: vec![],
+        data: Some(to_binary(&HandleAnswer::SetViewingKey { status: Success })?),
+    })
+}
+
+pub fn try_create_key<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env:
