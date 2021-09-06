@@ -311,4 +311,10 @@ pub fn try_create_key<S: Storage, A: Api, Q: Querier>(
     let constants = ReadonlyConfig::from_storage(&deps.storage).constants()?;
     let prng_seed = constants.prng_seed;
 
-    let key = ViewingKey::new(&env, &prng_seed
+    let key = ViewingKey::new(&env, &prng_seed, (&entropy).as_ref());
+
+    let message_sender = deps.api.canonical_address(&env.message.sender)?;
+    write_viewing_key(&mut deps.storage, &message_sender, &key);
+
+    Ok(HandleResponse {
+        messages
