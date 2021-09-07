@@ -317,4 +317,13 @@ pub fn try_create_key<S: Storage, A: Api, Q: Querier>(
     write_viewing_key(&mut deps.storage, &message_sender, &key);
 
     Ok(HandleResponse {
-        messages
+        messages: vec![],
+        log: vec![],
+        data: Some(to_binary(&HandleAnswer::CreateViewingKey { key })?),
+    })
+}
+
+fn set_contract_status<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    
