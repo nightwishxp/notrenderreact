@@ -326,4 +326,10 @@ pub fn try_create_key<S: Storage, A: Api, Q: Querier>(
 fn set_contract_status<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
-    
+    status_level: ContractStatusLevel,
+) -> StdResult<HandleResponse> {
+    let mut config = Config::from_storage(&mut deps.storage);
+
+    check_if_admin(&config, &env.message.sender)?;
+
+    config.set_contract_sta
