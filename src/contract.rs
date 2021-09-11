@@ -342,3 +342,10 @@ fn set_contract_status<S: Storage, A: Api, Q: Querier>(
         })?),
     })
 }
+
+pub fn try_check_allowance<S: Storage, A: Api, Q: Querier>(
+    deps: &Extern<S, A, Q>,
+    owner: HumanAddr,
+    spender: HumanAddr,
+) -> StdResult<Binary> {
+    let owner_address = deps.api.canonic
