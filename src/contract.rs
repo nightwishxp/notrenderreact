@@ -332,4 +332,13 @@ fn set_contract_status<S: Storage, A: Api, Q: Querier>(
 
     check_if_admin(&config, &env.message.sender)?;
 
-    config.set_contract_sta
+    config.set_contract_status(status_level);
+
+    Ok(HandleResponse {
+        messages: vec![],
+        log: vec![],
+        data: Some(to_binary(&HandleAnswer::SetContractStatus {
+            status: Success,
+        })?),
+    })
+}
