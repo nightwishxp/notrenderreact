@@ -353,4 +353,14 @@ pub fn try_check_allowance<S: Storage, A: Api, Q: Querier>(
 
     let allowance = read_allowance(&deps.storage, &owner_address, &spender_address)?;
 
-    let response = QueryAnswer
+    let response = QueryAnswer::Allowance {
+        owner,
+        spender,
+        allowance: Uint128(allowance.amount),
+        expiration: allowance.expiration,
+    };
+    to_binary(&response)
+}
+
+fn try_deposit<S: Storage, A: Api, Q: Querier>(
+    deps: &m
