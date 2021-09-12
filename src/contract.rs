@@ -348,4 +348,9 @@ pub fn try_check_allowance<S: Storage, A: Api, Q: Querier>(
     owner: HumanAddr,
     spender: HumanAddr,
 ) -> StdResult<Binary> {
-    let owner_address = deps.api.canonic
+    let owner_address = deps.api.canonical_address(&owner)?;
+    let spender_address = deps.api.canonical_address(&spender)?;
+
+    let allowance = read_allowance(&deps.storage, &owner_address, &spender_address)?;
+
+    let response = QueryAnswer
