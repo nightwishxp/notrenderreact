@@ -363,4 +363,11 @@ pub fn try_check_allowance<S: Storage, A: Api, Q: Querier>(
 }
 
 fn try_deposit<S: Storage, A: Api, Q: Querier>(
-    deps: &m
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+) -> StdResult<HandleResponse> {
+    let mut amount = Uint128::zero();
+
+    for coin in &env.message.sent_funds {
+        if coin.denom == "uscrt" {
+            amount = coi
