@@ -370,4 +370,14 @@ fn try_deposit<S: Storage, A: Api, Q: Querier>(
 
     for coin in &env.message.sent_funds {
         if coin.denom == "uscrt" {
-            amount = coi
+            amount = coin.amount
+        }
+    }
+
+    if amount.is_zero() {
+        return Err(StdError::generic_err("No funds were sent to be deposited"));
+    }
+
+    let amount = amount.u128();
+
+    let sender_address =
