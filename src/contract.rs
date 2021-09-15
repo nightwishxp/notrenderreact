@@ -380,4 +380,8 @@ fn try_deposit<S: Storage, A: Api, Q: Querier>(
 
     let amount = amount.u128();
 
-    let sender_address =
+    let sender_address = deps.api.canonical_address(&env.message.sender)?;
+
+    let mut balances = Balances::from_storage(&mut deps.storage);
+    let account_balance = balances.balance(&sender_address);
+    if let Some(account_balance
