@@ -388,4 +388,11 @@ fn try_deposit<S: Storage, A: Api, Q: Querier>(
         balances.set_account_balance(&sender_address, account_balance);
     } else {
         return Err(StdError::generic_err(
-            "This deposit would overflow your balan
+            "This deposit would overflow your balance",
+        ));
+    }
+
+    let mut config = Config::from_storage(&mut deps.storage);
+    let total_supply = config.total_supply();
+    if let Some(total_supply) = total_supply.checked_add(amount) {
+        config.set_
