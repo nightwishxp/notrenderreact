@@ -384,4 +384,8 @@ fn try_deposit<S: Storage, A: Api, Q: Querier>(
 
     let mut balances = Balances::from_storage(&mut deps.storage);
     let account_balance = balances.balance(&sender_address);
-    if let Some(account_balance
+    if let Some(account_balance) = account_balance.checked_add(amount) {
+        balances.set_account_balance(&sender_address, account_balance);
+    } else {
+        return Err(StdError::generic_err(
+            "This deposit would overflow your balan
