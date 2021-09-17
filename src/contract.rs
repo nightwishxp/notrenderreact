@@ -403,4 +403,13 @@ fn try_deposit<S: Storage, A: Api, Q: Querier>(
     }
 
     let res = HandleResponse {
-        me
+        messages: vec![],
+        log: vec![],
+        data: Some(to_binary(&HandleAnswer::Deposit { status: Success })?),
+    };
+
+    Ok(res)
+}
+
+fn try_redeem<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, 
