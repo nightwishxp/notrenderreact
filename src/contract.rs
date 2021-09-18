@@ -412,4 +412,11 @@ fn try_deposit<S: Storage, A: Api, Q: Querier>(
 }
 
 fn try_redeem<S: Storage, A: Api, Q: Querier>(
-    deps: &mut Extern<S, A, 
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    amount: Uint128,
+) -> StdResult<HandleResponse> {
+    let sender_address = deps.api.canonical_address(&env.message.sender)?;
+    let amount_raw = amount.u128();
+
+    l
