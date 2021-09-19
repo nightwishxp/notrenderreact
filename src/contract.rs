@@ -419,4 +419,8 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     let sender_address = deps.api.canonical_address(&env.message.sender)?;
     let amount_raw = amount.u128();
 
-    l
+    let mut balances = Balances::from_storage(&mut deps.storage);
+    let account_balance = balances.balance(&sender_address);
+
+    if let Some(account_balance) = account_balance.checked_sub(amount_raw) {
+     
