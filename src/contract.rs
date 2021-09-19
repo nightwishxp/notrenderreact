@@ -423,4 +423,8 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     let account_balance = balances.balance(&sender_address);
 
     if let Some(account_balance) = account_balance.checked_sub(amount_raw) {
-     
+        balances.set_account_balance(&sender_address, account_balance);
+    } else {
+        return Err(StdError::generic_err(format!(
+            "insufficient funds to redeem: balance={}, required={}",
+            account_balance, am
