@@ -427,4 +427,10 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     } else {
         return Err(StdError::generic_err(format!(
             "insufficient funds to redeem: balance={}, required={}",
-            account_balance, am
+            account_balance, amount_raw
+        )));
+    }
+
+    let mut config = Config::from_storage(&mut deps.storage);
+    let total_supply = config.total_supply();
+    if let Some(total_supply) = total_supply.checked_sub(amount_raw) 
