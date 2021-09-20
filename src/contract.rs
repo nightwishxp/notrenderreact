@@ -433,4 +433,8 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
 
     let mut config = Config::from_storage(&mut deps.storage);
     let total_supply = config.total_supply();
-    if let Some(total_supply) = total_supply.checked_sub(amount_raw) 
+    if let Some(total_supply) = total_supply.checked_sub(amount_raw) {
+        config.set_total_supply(total_supply);
+    } else {
+        return Err(StdError::generic_err(
+            "You are tyring to redeem more tokens than what is available in the total supply",
