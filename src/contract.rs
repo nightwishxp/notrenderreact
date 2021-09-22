@@ -438,3 +438,13 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     } else {
         return Err(StdError::generic_err(
             "You are tyring to redeem more tokens than what is available in the total supply",
+        ));
+    }
+
+    let withdrawl_coins: Vec<Coin> = vec![Coin {
+        denom: "uscrt".to_string(),
+        amount,
+    }];
+
+    let res = HandleResponse {
+        messages: vec![Cos
