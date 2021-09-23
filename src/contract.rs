@@ -447,4 +447,10 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     }];
 
     let res = HandleResponse {
-        messages: vec![Cos
+        messages: vec![CosmosMsg::Bank(BankMsg::Send {
+            from_address: env.contract.address,
+            to_address: env.message.sender,
+            amount: withdrawl_coins,
+        })],
+        log: vec![],
+        data: Some
