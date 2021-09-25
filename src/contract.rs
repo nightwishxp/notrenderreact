@@ -464,4 +464,10 @@ fn try_transfer_impl<S: Storage, A: Api, Q: Querier>(
     env: Env,
     recipient: &HumanAddr,
     amount: Uint128,
-) -
+) -> StdResult<()> {
+    let sender_address = deps.api.canonical_address(&env.message.sender)?;
+    let recipient_address = deps.api.canonical_address(recipient)?;
+
+    perform_transfer(
+        &mut deps.storage,
+        &sender_
