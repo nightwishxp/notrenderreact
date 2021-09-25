@@ -453,4 +453,15 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
             amount: withdrawl_coins,
         })],
         log: vec![],
-        data: Some
+        data: Some(to_binary(&HandleAnswer::Redeem { status: Success })?),
+    };
+
+    Ok(res)
+}
+
+fn try_transfer_impl<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    recipient: &HumanAddr,
+    amount: Uint128,
+) -
