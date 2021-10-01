@@ -492,4 +492,12 @@ fn try_transfer_impl<S: Storage, A: Api, Q: Querier>(
 fn try_transfer<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
-    rec
+    recipient: &HumanAddr,
+    amount: Uint128,
+) -> StdResult<HandleResponse> {
+    try_transfer_impl(deps, env, recipient, amount)?;
+
+    let res = HandleResponse {
+        messages: vec![],
+        log: vec![],
+        d
