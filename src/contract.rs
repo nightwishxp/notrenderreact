@@ -500,4 +500,12 @@ fn try_transfer<S: Storage, A: Api, Q: Querier>(
     let res = HandleResponse {
         messages: vec![],
         log: vec![],
-        d
+        data: Some(to_binary(&HandleAnswer::Transfer { status: Success })?),
+    };
+    Ok(res)
+}
+
+fn try_add_receiver_api_callback<S: ReadonlyStorage>(
+    messages: &mut Vec<CosmosMsg>,
+    storage: &S,
+    recipient:
