@@ -508,4 +508,11 @@ fn try_transfer<S: Storage, A: Api, Q: Querier>(
 fn try_add_receiver_api_callback<S: ReadonlyStorage>(
     messages: &mut Vec<CosmosMsg>,
     storage: &S,
-    recipient:
+    recipient: &HumanAddr,
+    msg: Option<Binary>,
+    sender: HumanAddr,
+    from: HumanAddr,
+    amount: Uint128,
+) -> StdResult<()> {
+    let receiver_hash = get_receiver_hash(storage, recipient);
+    if let Some(receiver_hash) = receiver_hash 
