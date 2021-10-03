@@ -515,4 +515,9 @@ fn try_add_receiver_api_callback<S: ReadonlyStorage>(
     amount: Uint128,
 ) -> StdResult<()> {
     let receiver_hash = get_receiver_hash(storage, recipient);
-    if let Some(receiver_hash) = receiver_hash 
+    if let Some(receiver_hash) = receiver_hash {
+        let receiver_hash = receiver_hash?;
+        let receiver_msg = Snip20ReceiveMsg::new(sender, from, amount, msg);
+        let callback_msg = receiver_msg.into_cosmos_msg(receiver_hash, recipient.clone())?;
+
+        mes
