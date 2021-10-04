@@ -520,4 +520,14 @@ fn try_add_receiver_api_callback<S: ReadonlyStorage>(
         let receiver_msg = Snip20ReceiveMsg::new(sender, from, amount, msg);
         let callback_msg = receiver_msg.into_cosmos_msg(receiver_hash, recipient.clone())?;
 
-        mes
+        messages.push(callback_msg);
+    }
+    Ok(())
+}
+
+fn try_send<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    recipient: &HumanAddr,
+    amount: Uint128,
+    msg: Option
