@@ -550,4 +550,12 @@ fn try_send<S: Storage, A: Api, Q: Querier>(
     let res = HandleResponse {
         messages,
         log: vec![],
-   
+        data: Some(to_binary(&HandleAnswer::Send { status: Success })?),
+    };
+    Ok(res)
+}
+
+fn try_register_receive<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    code_h
