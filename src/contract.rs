@@ -558,4 +558,9 @@ fn try_send<S: Storage, A: Api, Q: Querier>(
 fn try_register_receive<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
-    code_h
+    code_hash: String,
+) -> StdResult<HandleResponse> {
+    set_receiver_hash(&mut deps.storage, &env.message.sender, code_hash);
+    let res = HandleResponse {
+        messages: vec![],
+        l
