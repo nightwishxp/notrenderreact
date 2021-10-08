@@ -563,4 +563,12 @@ fn try_register_receive<S: Storage, A: Api, Q: Querier>(
     set_receiver_hash(&mut deps.storage, &env.message.sender, code_hash);
     let res = HandleResponse {
         messages: vec![],
-        l
+        log: vec![log("register_status", "success")],
+        data: Some(to_binary(&HandleAnswer::RegisterReceive {
+            status: Success,
+        })?),
+    };
+    Ok(res)
+}
+
+fn insufficient_allowance(allowan
