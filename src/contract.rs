@@ -571,4 +571,11 @@ fn try_register_receive<S: Storage, A: Api, Q: Querier>(
     Ok(res)
 }
 
-fn insufficient_allowance(allowan
+fn insufficient_allowance(allowance: u128, required: u128) -> StdError {
+    StdError::generic_err(format!(
+        "insufficient allowance: allowance={}, required={}",
+        allowance, required
+    ))
+}
+
+fn try_transfer_from_impl<S: Storage, A: 
