@@ -578,4 +578,11 @@ fn insufficient_allowance(allowance: u128, required: u128) -> StdError {
     ))
 }
 
-fn try_transfer_from_impl<S: Storage, A: 
+fn try_transfer_from_impl<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    owner: &HumanAddr,
+    recipient: &HumanAddr,
+    amount: Uint128,
+) -> StdResult<()> {
+    let spender_address = deps.api.canonical_address(
