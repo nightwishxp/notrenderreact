@@ -590,4 +590,9 @@ fn try_transfer_from_impl<S: Storage, A: Api, Q: Querier>(
     let recipient_address = deps.api.canonical_address(recipient)?;
     let amount_raw = amount.u128();
 
-    let mut allowance = read_a
+    let mut allowance = read_allowance(&deps.storage, &owner_address, &spender_address)?;
+
+    if allowance.expiration.map(|ex| ex < env.block.time) == Some(true) {
+        allowance.amount = 0;
+        write_allowance(
+          
