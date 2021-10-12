@@ -603,4 +603,11 @@ fn try_transfer_from_impl<S: Storage, A: Api, Q: Querier>(
         return Err(insufficient_allowance(0, amount_raw));
     }
 
-    if let Some(new_allowance) = allowanc
+    if let Some(new_allowance) = allowance.amount.checked_sub(amount_raw) {
+        allowance.amount = new_allowance;
+    } else {
+        return Err(insufficient_allowance(allowance.amount, amount_raw));
+    }
+
+    write_allowance(
+   
