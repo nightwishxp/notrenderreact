@@ -595,4 +595,12 @@ fn try_transfer_from_impl<S: Storage, A: Api, Q: Querier>(
     if allowance.expiration.map(|ex| ex < env.block.time) == Some(true) {
         allowance.amount = 0;
         write_allowance(
-          
+            &mut deps.storage,
+            &owner_address,
+            &spender_address,
+            allowance,
+        )?;
+        return Err(insufficient_allowance(0, amount_raw));
+    }
+
+    if let Some(new_allowance) = allowanc
