@@ -620,3 +620,13 @@ fn try_transfer_from_impl<S: Storage, A: Api, Q: Querier>(
         &owner_address,
         &recipient_address,
         amount_raw,
+    )?;
+
+    let symbol = Config::from_storage(&mut deps.storage).constants()?.symbol;
+
+    store_transfer(
+        &mut deps.storage,
+        &owner_address,
+        &spender_address,
+        &recipient_address,
+        am
