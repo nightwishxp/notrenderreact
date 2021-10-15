@@ -610,4 +610,13 @@ fn try_transfer_from_impl<S: Storage, A: Api, Q: Querier>(
     }
 
     write_allowance(
-   
+        &mut deps.storage,
+        &owner_address,
+        &spender_address,
+        allowance,
+    )?;
+    perform_transfer(
+        &mut deps.storage,
+        &owner_address,
+        &recipient_address,
+        amount_raw,
