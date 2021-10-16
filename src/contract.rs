@@ -629,4 +629,16 @@ fn try_transfer_from_impl<S: Storage, A: Api, Q: Querier>(
         &owner_address,
         &spender_address,
         &recipient_address,
-        am
+        amount,
+        symbol,
+    )?;
+
+    Ok(())
+}
+
+fn try_transfer_from<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    owner: &HumanAddr,
+    recipient: &HumanAddr,
+    amount: Uint
