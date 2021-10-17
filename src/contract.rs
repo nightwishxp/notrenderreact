@@ -641,4 +641,11 @@ fn try_transfer_from<S: Storage, A: Api, Q: Querier>(
     env: Env,
     owner: &HumanAddr,
     recipient: &HumanAddr,
-    amount: Uint
+    amount: Uint128,
+) -> StdResult<HandleResponse> {
+    try_transfer_from_impl(deps, env, owner, recipient, amount)?;
+
+    let res = HandleResponse {
+        messages: vec![],
+        log: vec![],
+        data: Some(to_binary(&Ha
