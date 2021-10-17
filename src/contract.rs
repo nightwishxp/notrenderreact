@@ -648,4 +648,14 @@ fn try_transfer_from<S: Storage, A: Api, Q: Querier>(
     let res = HandleResponse {
         messages: vec![],
         log: vec![],
-        data: Some(to_binary(&Ha
+        data: Some(to_binary(&HandleAnswer::TransferFrom { status: Success })?),
+    };
+    Ok(res)
+}
+
+fn try_send_from<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    owner: &HumanAddr,
+    recipient: &HumanAddr,
+    am
