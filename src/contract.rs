@@ -658,4 +658,10 @@ fn try_send_from<S: Storage, A: Api, Q: Querier>(
     env: Env,
     owner: &HumanAddr,
     recipient: &HumanAddr,
-    am
+    amount: Uint128,
+    msg: Option<Binary>,
+) -> StdResult<HandleResponse> {
+    let sender = env.message.sender.clone();
+    try_transfer_from_impl(deps, env, owner, recipient, amount)?;
+
+    let mut me
