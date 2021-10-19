@@ -676,4 +676,12 @@ fn try_send_from<S: Storage, A: Api, Q: Querier>(
         amount,
     )?;
 
-    let res = Handl
+    let res = HandleResponse {
+        messages,
+        log: vec![],
+        data: Some(to_binary(&HandleAnswer::SendFrom { status: Success })?),
+    };
+    Ok(res)
+}
+
+fn try_increase_allowance<S: Storage, A: Api
