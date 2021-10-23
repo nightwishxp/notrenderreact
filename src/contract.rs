@@ -684,4 +684,11 @@ fn try_send_from<S: Storage, A: Api, Q: Querier>(
     Ok(res)
 }
 
-fn try_increase_allowance<S: Storage, A: Api
+fn try_increase_allowance<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    spender: HumanAddr,
+    amount: Uint128,
+    expiration: Option<u64>,
+) -> StdResult<HandleResponse> {
+    let owner_address = deps.api.canonical_address(&env.messag
