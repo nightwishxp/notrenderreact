@@ -691,4 +691,8 @@ fn try_increase_allowance<S: Storage, A: Api, Q: Querier>(
     amount: Uint128,
     expiration: Option<u64>,
 ) -> StdResult<HandleResponse> {
-    let owner_address = deps.api.canonical_address(&env.messag
+    let owner_address = deps.api.canonical_address(&env.message.sender)?;
+    let spender_address = deps.api.canonical_address(&spender)?;
+
+    let mut allowance = read_allowance(&deps.storage, &owner_address, &spender_address)?;
+    allowance.amount = 
