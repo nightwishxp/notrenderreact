@@ -695,4 +695,10 @@ fn try_increase_allowance<S: Storage, A: Api, Q: Querier>(
     let spender_address = deps.api.canonical_address(&spender)?;
 
     let mut allowance = read_allowance(&deps.storage, &owner_address, &spender_address)?;
-    allowance.amount = 
+    allowance.amount = allowance.amount.saturating_add(amount.u128());
+    if expiration.is_some() {
+        allowance.expiration = expiration;
+    }
+    let new_amount = allowance.amount;
+    write_allowance(
+        &mut deps.storag
