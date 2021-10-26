@@ -710,4 +710,14 @@ fn try_increase_allowance<S: Storage, A: Api, Q: Querier>(
     let res = HandleResponse {
         messages: vec![],
         log: vec![],
-        data: Some(to_binary(&HandleAnswer::IncreaseAllowa
+        data: Some(to_binary(&HandleAnswer::IncreaseAllowance {
+            owner: env.message.sender,
+            spender,
+            allowance: Uint128(new_amount),
+        })?),
+    };
+    Ok(res)
+}
+
+fn try_decrease_allowance<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Ext
