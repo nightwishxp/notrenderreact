@@ -701,4 +701,13 @@ fn try_increase_allowance<S: Storage, A: Api, Q: Querier>(
     }
     let new_amount = allowance.amount;
     write_allowance(
-        &mut deps.storag
+        &mut deps.storage,
+        &owner_address,
+        &spender_address,
+        allowance,
+    )?;
+
+    let res = HandleResponse {
+        messages: vec![],
+        log: vec![],
+        data: Some(to_binary(&HandleAnswer::IncreaseAllowa
