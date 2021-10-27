@@ -720,4 +720,11 @@ fn try_increase_allowance<S: Storage, A: Api, Q: Querier>(
 }
 
 fn try_decrease_allowance<S: Storage, A: Api, Q: Querier>(
-    deps: &mut Ext
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    spender: HumanAddr,
+    amount: Uint128,
+    expiration: Option<u64>,
+) -> StdResult<HandleResponse> {
+    let owner_address = deps.api.canonical_address(&env.message.sender)?;
+    let spender_address = deps.ap
