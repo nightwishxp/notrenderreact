@@ -740,4 +740,11 @@ fn try_decrease_allowance<S: Storage, A: Api, Q: Querier>(
         &owner_address,
         &spender_address,
         allowance,
-   
+    )?;
+
+    let res = HandleResponse {
+        messages: vec![],
+        log: vec![],
+        data: Some(to_binary(&HandleAnswer::DecreaseAllowance {
+            owner: env.message.sender,
+            spender,
