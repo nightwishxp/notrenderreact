@@ -748,3 +748,14 @@ fn try_decrease_allowance<S: Storage, A: Api, Q: Querier>(
         data: Some(to_binary(&HandleAnswer::DecreaseAllowance {
             owner: env.message.sender,
             spender,
+            allowance: Uint128(new_amount),
+        })?),
+    };
+    Ok(res)
+}
+
+fn perform_transfer<T: Storage>(
+    store: &mut T,
+    from: &CanonicalAddr,
+    to: &CanonicalAddr,
+    amount: u128
