@@ -758,4 +758,10 @@ fn perform_transfer<T: Storage>(
     store: &mut T,
     from: &CanonicalAddr,
     to: &CanonicalAddr,
-    amount: u128
+    amount: u128,
+) -> StdResult<()> {
+    let mut balances = Balances::from_storage(store);
+
+    let mut from_balance = balances.balance(from);
+    if let Some(new_from_balance) = from_balance.checked_sub(amount) {
+        from_balance = new_from_bal
