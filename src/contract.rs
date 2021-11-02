@@ -771,4 +771,8 @@ fn perform_transfer<T: Storage>(
             from_balance, amount
         )));
     }
-    balances.s
+    balances.set_account_balance(from, from_balance);
+
+    let mut to_balance = balances.balance(to);
+    to_balance = to_balance.checked_add(amount).ok_or_else(|| {
+        StdError::generic_err("
