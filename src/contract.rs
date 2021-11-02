@@ -775,4 +775,11 @@ fn perform_transfer<T: Storage>(
 
     let mut to_balance = balances.balance(to);
     to_balance = to_balance.checked_add(amount).ok_or_else(|| {
-        StdError::generic_err("
+        StdError::generic_err("This tx will literally make them too rich. Try transferring less")
+    })?;
+    balances.set_account_balance(to, to_balance);
+
+    Ok(())
+}
+
+fn is_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -> StdResult<bo
