@@ -782,4 +782,13 @@ fn perform_transfer<T: Storage>(
     Ok(())
 }
 
-fn is_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -> StdResult<bo
+fn is_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -> StdResult<bool> {
+    let consts = config.constants()?;
+    if &consts.admin != account {
+        return Ok(false);
+    }
+
+    Ok(true)
+}
+
+fn check_if_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -
