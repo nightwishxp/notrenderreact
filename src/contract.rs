@@ -791,4 +791,12 @@ fn is_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -> StdResult<bo
     Ok(true)
 }
 
-fn check_if_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -
+fn check_if_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -> StdResult<()> {
+    if !is_admin(config, account)? {
+        return Err(StdError::generic_err(
+            "This is an admin command. Admin commands can only be run from admin address",
+        ));
+    }
+
+    Ok(())
+}
