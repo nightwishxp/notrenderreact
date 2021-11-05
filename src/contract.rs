@@ -810,4 +810,11 @@ fn is_valid_symbol(symbol: &str) -> bool {
     let len = symbol.len();
     let len_is_valid = 3 <= len && len <= 6;
 
-    l
+    len_is_valid && symbol.bytes().all(|byte| b'A' <= byte && byte <= b'Z')
+}
+
+// pub fn migrate<S: Storage, A: Api, Q: Querier>(
+//     _deps: &mut Extern<S, A, Q>,
+//     _env: Env,
+//     _msg: MigrateMsg,
+// ) ->
