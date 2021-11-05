@@ -800,3 +800,14 @@ fn check_if_admin<S: Storage>(config: &Config<S>, account: &HumanAddr) -> StdRes
 
     Ok(())
 }
+
+fn is_valid_name(name: &str) -> bool {
+    let len = name.len();
+    3 <= len && len <= 30
+}
+
+fn is_valid_symbol(symbol: &str) -> bool {
+    let len = symbol.len();
+    let len_is_valid = 3 <= len && len <= 6;
+
+    l
