@@ -826,4 +826,11 @@ mod tests {
     use super::*;
     use crate::msg::ResponseStatus;
     use crate::msg::{InitConfig, InitialBalance};
-    use
+    use cosmwasm_std::testing::*;
+    use cosmwasm_std::{from_binary, BlockInfo, ContractInfo, MessageInfo, QueryResponse, WasmMsg};
+    use std::any::Any;
+
+    // Helper functions
+
+    fn init_helper(
+        initial_balan
