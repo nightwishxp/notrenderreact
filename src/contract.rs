@@ -817,4 +817,13 @@ fn is_valid_symbol(symbol: &str) -> bool {
 //     _deps: &mut Extern<S, A, Q>,
 //     _env: Env,
 //     _msg: MigrateMsg,
-// ) ->
+// ) -> StdResult<MigrateResponse> {
+//     Ok(MigrateResponse::default())
+// }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::msg::ResponseStatus;
+    use crate::msg::{InitConfig, InitialBalance};
+    use
