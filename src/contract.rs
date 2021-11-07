@@ -833,4 +833,10 @@ mod tests {
     // Helper functions
 
     fn init_helper(
-        initial_balan
+        initial_balances: Vec<InitialBalance>,
+    ) -> (
+        StdResult<InitResponse>,
+        Extern<MockStorage, MockApi, MockQuerier>,
+    ) {
+        let mut deps = mock_dependencies(20, &[]);
+        let env =
