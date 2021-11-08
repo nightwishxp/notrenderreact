@@ -839,4 +839,9 @@ mod tests {
         Extern<MockStorage, MockApi, MockQuerier>,
     ) {
         let mut deps = mock_dependencies(20, &[]);
-        let env =
+        let env = mock_env("instantiator", &[]);
+
+        let init_msg = InitMsg {
+            name: "sec-sec".to_string(),
+            admin: Some(HumanAddr("admin".to_string())),
+            symbol: "SECSEC".to_string(),
