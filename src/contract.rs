@@ -845,3 +845,10 @@ mod tests {
             name: "sec-sec".to_string(),
             admin: Some(HumanAddr("admin".to_string())),
             symbol: "SECSEC".to_string(),
+            decimals: 8,
+            initial_balances: Some(initial_balances),
+            prng_seed: Binary::from("lolz fun yay".as_bytes()),
+            config: None,
+        };
+
+        (init(&mut deps, env, init_msg), deps)
