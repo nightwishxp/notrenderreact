@@ -857,4 +857,8 @@ mod tests {
     /// Will return a ViewingKey only for the first account in `initial_balances`
     fn auth_query_helper(
         initial_balances: Vec<InitialBalance>,
-    ) -> (ViewingKe
+    ) -> (ViewingKey, Extern<MockStorage, MockApi, MockQuerier>) {
+        let (init_result, mut deps) = init_helper(initial_balances.clone());
+        assert!(
+            init_result.is_ok(),
+            "Init faile
