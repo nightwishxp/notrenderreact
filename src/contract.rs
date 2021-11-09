@@ -852,3 +852,9 @@ mod tests {
         };
 
         (init(&mut deps, env, init_msg), deps)
+    }
+
+    /// Will return a ViewingKey only for the first account in `initial_balances`
+    fn auth_query_helper(
+        initial_balances: Vec<InitialBalance>,
+    ) -> (ViewingKe
