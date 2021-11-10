@@ -868,4 +868,8 @@ mod tests {
         let account = initial_balances[0].address.clone();
         let create_vk_msg = HandleMsg::CreateViewingKey {
             entropy: "42".to_string(),
-      
+            padding: None,
+        };
+        let handle_response = handle(&mut deps, mock_env(account.0, &[]), create_vk_msg).unwrap();
+        let vk = match from_binary(&handle_response.data.unwrap()).unwrap() {
+            HandleAnswe
