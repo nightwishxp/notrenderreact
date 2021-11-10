@@ -861,4 +861,11 @@ mod tests {
         let (init_result, mut deps) = init_helper(initial_balances.clone());
         assert!(
             init_result.is_ok(),
-            "Init faile
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let account = initial_balances[0].address.clone();
+        let create_vk_msg = HandleMsg::CreateViewingKey {
+            entropy: "42".to_string(),
+      
