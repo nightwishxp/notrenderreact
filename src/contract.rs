@@ -872,4 +872,12 @@ mod tests {
         };
         let handle_response = handle(&mut deps, mock_env(account.0, &[]), create_vk_msg).unwrap();
         let vk = match from_binary(&handle_response.data.unwrap()).unwrap() {
-            HandleAnswe
+            HandleAnswer::CreateViewingKey { key } => key,
+            _ => panic!("Unexpected result from handle"),
+        };
+
+        (vk, deps)
+    }
+
+    fn extract_error_msg<T: Any>(error: StdResult<T>) -> String {
+     
