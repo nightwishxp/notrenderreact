@@ -880,4 +880,8 @@ mod tests {
     }
 
     fn extract_error_msg<T: Any>(error: StdResult<T>) -> String {
-     
+        match error {
+            Ok(response) => {
+                let bin_err = (&response as &dyn Any)
+                    .downcast_ref::<QueryResponse>()
+                    .expect("An error was ex
