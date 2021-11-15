@@ -887,4 +887,11 @@ mod tests {
                     .expect("An error was expected, but no error could be extracted");
                 match from_binary(bin_err).unwrap() {
                     QueryAnswer::ViewingKeyError { msg } => msg,
-                    _ => panic!("Unexpec
+                    _ => panic!("Unexpected query answer"),
+                }
+            }
+            Err(err) => match err {
+                StdError::GenericErr { msg, .. } => msg,
+                _ => panic!("Unexpected result from init"),
+            },
+  
