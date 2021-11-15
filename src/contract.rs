@@ -884,4 +884,7 @@ mod tests {
             Ok(response) => {
                 let bin_err = (&response as &dyn Any)
                     .downcast_ref::<QueryResponse>()
-                    .expect("An error was ex
+                    .expect("An error was expected, but no error could be extracted");
+                match from_binary(bin_err).unwrap() {
+                    QueryAnswer::ViewingKeyError { msg } => msg,
+                    _ => panic!("Unexpec
