@@ -901,4 +901,9 @@ mod tests {
         let handle_result: HandleAnswer = from_binary(&handle_result.data.unwrap()).unwrap();
 
         match handle_result {
-            HandleAnswer::Depo
+            HandleAnswer::Deposit { status }
+            | HandleAnswer::Redeem { status }
+            | HandleAnswer::Transfer { status }
+            | HandleAnswer::Send { status }
+            | HandleAnswer::RegisterReceive { status }
+            | HandleAnswer::SetViewingKey 
