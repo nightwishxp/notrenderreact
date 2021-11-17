@@ -894,4 +894,11 @@ mod tests {
                 StdError::GenericErr { msg, .. } => msg,
                 _ => panic!("Unexpected result from init"),
             },
-  
+        }
+    }
+
+    fn ensure_success(handle_result: HandleResponse) -> bool {
+        let handle_result: HandleAnswer = from_binary(&handle_result.data.unwrap()).unwrap();
+
+        match handle_result {
+            HandleAnswer::Depo
