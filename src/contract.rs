@@ -906,4 +906,9 @@ mod tests {
             | HandleAnswer::Transfer { status }
             | HandleAnswer::Send { status }
             | HandleAnswer::RegisterReceive { status }
-            | HandleAnswer::SetViewingKey 
+            | HandleAnswer::SetViewingKey { status }
+            | HandleAnswer::TransferFrom { status }
+            | HandleAnswer::SendFrom { status }
+            | HandleAnswer::ChangeAdmin { status }
+            | HandleAnswer::SetContractStatus { status } => {
+     
