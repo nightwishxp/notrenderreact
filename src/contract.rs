@@ -920,3 +920,8 @@ mod tests {
     // Init tests
 
     #[test]
+    fn test_init_sanity() {
+        let (init_result, deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("lebron".to_string()),
+            amount: Uint128(5000),
+        }]);
