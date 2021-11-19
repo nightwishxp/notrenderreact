@@ -911,4 +911,12 @@ mod tests {
             | HandleAnswer::SendFrom { status }
             | HandleAnswer::ChangeAdmin { status }
             | HandleAnswer::SetContractStatus { status } => {
-     
+                matches!(status, ResponseStatus::Success {..})
+            }
+            _ => panic!("HandleAnswer not supported for success extraction"),
+        }
+    }
+
+    // Init tests
+
+    #[test]
