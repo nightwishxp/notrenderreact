@@ -925,3 +925,8 @@ mod tests {
             address: HumanAddr("lebron".to_string()),
             amount: Uint128(5000),
         }]);
+        assert_eq!(init_result.unwrap(), InitResponse::default());
+
+        let config = ReadonlyConfig::from_storage(&deps.storage);
+        let constants = config.constants().unwrap();
+        assert_eq!(config.tot
