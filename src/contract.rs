@@ -929,4 +929,7 @@ mod tests {
 
         let config = ReadonlyConfig::from_storage(&deps.storage);
         let constants = config.constants().unwrap();
-        assert_eq!(config.tot
+        assert_eq!(config.total_supply(), 5000);
+        assert_eq!(config.contract_status(), ContractStatusLevel::NormalRun);
+        assert_eq!(constants.name, "sec-sec".to_string());
+        assert_eq!(consta
