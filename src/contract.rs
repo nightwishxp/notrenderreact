@@ -932,4 +932,9 @@ mod tests {
         assert_eq!(config.total_supply(), 5000);
         assert_eq!(config.contract_status(), ContractStatusLevel::NormalRun);
         assert_eq!(constants.name, "sec-sec".to_string());
-        assert_eq!(consta
+        assert_eq!(constants.admin, HumanAddr("admin".to_string()));
+        assert_eq!(constants.symbol, "SECSEC".to_string());
+        assert_eq!(constants.decimals, 8);
+        assert_eq!(
+            constants.prng_seed,
+            
