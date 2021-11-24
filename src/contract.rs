@@ -937,4 +937,11 @@ mod tests {
         assert_eq!(constants.decimals, 8);
         assert_eq!(
             constants.prng_seed,
-            
+            sha_256("lolz fun yay".to_owned().as_bytes())
+        );
+        assert_eq!(constants.total_supply_is_public, false);
+    }
+
+    #[test]
+    fn test_total_supply_overflow() {
+        let (init_result, _deps) = ini
