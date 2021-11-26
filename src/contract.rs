@@ -944,4 +944,10 @@ mod tests {
 
     #[test]
     fn test_total_supply_overflow() {
-        let (init_result, _deps) = ini
+        let (init_result, _deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("lebron".to_string()),
+            amount: Uint128(u128::max_value()),
+        }]);
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
