@@ -951,3 +951,10 @@ mod tests {
         assert!(
             init_result.is_ok(),
             "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let (init_result, _deps) = init_helper(vec![
+            InitialBalance {
+                address: HumanAddr("lebron".to_string()),
+             
