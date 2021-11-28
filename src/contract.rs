@@ -957,4 +957,11 @@ mod tests {
         let (init_result, _deps) = init_helper(vec![
             InitialBalance {
                 address: HumanAddr("lebron".to_string()),
-             
+                amount: Uint128(u128::max_value()),
+            },
+            InitialBalance {
+                address: HumanAddr("giannis".to_string()),
+                amount: Uint128(1),
+            },
+        ]);
+        let e
