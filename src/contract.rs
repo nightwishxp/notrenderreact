@@ -964,4 +964,14 @@ mod tests {
                 amount: Uint128(1),
             },
         ]);
-        let e
+        let error = extract_error_msg(init_result);
+        assert_eq!(
+            error,
+            "The sum of all initial balances exceeds the maximum possible total supply"
+        );
+    }
+
+    // Handle tests
+
+    #[test]
+    fn test_handle_tra
