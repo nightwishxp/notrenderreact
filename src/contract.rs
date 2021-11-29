@@ -974,4 +974,10 @@ mod tests {
     // Handle tests
 
     #[test]
-    fn test_handle_tra
+    fn test_handle_transfer() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string()),
+            amount: Uint128(5000),
+        }]);
+        assert!(
+      
