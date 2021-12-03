@@ -980,4 +980,11 @@ mod tests {
             amount: Uint128(5000),
         }]);
         assert!(
-      
+            init_result.is_ok(),
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let handle_msg = HandleMsg::Transfer {
+            recipient: HumanAddr("alice".to_string()),
+            amount: Uint128
