@@ -992,4 +992,11 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
         let result = handle_result.unwrap();
-        assert!(ensure_success(res
+        assert!(ensure_success(result));
+        let bob_canonical = deps
+            .api
+            .canonical_address(&HumanAddr("bob".to_string()))
+            .unwrap();
+        let alice_canonical = deps
+            .api
+            .canonical_
