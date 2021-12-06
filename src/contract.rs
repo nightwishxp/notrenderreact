@@ -999,4 +999,8 @@ mod tests {
             .unwrap();
         let alice_canonical = deps
             .api
-            .canonical_
+            .canonical_address(&HumanAddr("alice".to_string()))
+            .unwrap();
+        let balances = ReadonlyBalances::from_storage(&deps.storage);
+        assert_eq!(5000 - 1000, balances.account_amount(&bob_canonical));
+        assert_eq!(1000, balances.account_amou
