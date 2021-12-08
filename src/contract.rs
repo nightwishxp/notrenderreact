@@ -1003,4 +1003,11 @@ mod tests {
             .unwrap();
         let balances = ReadonlyBalances::from_storage(&deps.storage);
         assert_eq!(5000 - 1000, balances.account_amount(&bob_canonical));
-        assert_eq!(1000, balances.account_amou
+        assert_eq!(1000, balances.account_amount(&alice_canonical));
+
+        let handle_msg = HandleMsg::Transfer {
+            recipient: HumanAddr("alice".to_string()),
+            amount: Uint128(10000),
+            padding: None,
+        };
+        let ha
