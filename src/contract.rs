@@ -1010,4 +1010,10 @@ mod tests {
             amount: Uint128(10000),
             padding: None,
         };
-        let ha
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        let error = extract_error_msg(handle_result);
+        assert!(error.contains("insufficient funds"));
+    }
+
+    #[test]
+    fn test_handle
