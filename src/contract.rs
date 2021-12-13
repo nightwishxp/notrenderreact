@@ -1028,4 +1028,8 @@ mod tests {
         );
 
         let handle_msg = HandleMsg::RegisterReceive {
-            code_
+            code_hash: "this_is_a_hash_of_a_code".to_string(),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("contract", &[]), handle_msg);
+        let result = handl
