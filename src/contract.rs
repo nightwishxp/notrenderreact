@@ -1032,4 +1032,9 @@ mod tests {
             padding: None,
         };
         let handle_result = handle(&mut deps, mock_env("contract", &[]), handle_msg);
-        let result = handl
+        let result = handle_result.unwrap();
+        assert!(ensure_success(result));
+
+        let handle_msg = HandleMsg::Send {
+            recipient: HumanAddr("contract".to_string()),
+            amount: Uint12
