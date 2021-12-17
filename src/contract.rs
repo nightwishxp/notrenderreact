@@ -1037,4 +1037,9 @@ mod tests {
 
         let handle_msg = HandleMsg::Send {
             recipient: HumanAddr("contract".to_string()),
-            amount: Uint12
+            amount: Uint128(100),
+            padding: None,
+            msg: Some(to_binary("hey hey you you").unwrap()),
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        let result = handle_result.unwrap
