@@ -1046,4 +1046,8 @@ mod tests {
         assert!(ensure_success(result.clone()));
         assert!(result.messages.contains(&CosmosMsg::Wasm(WasmMsg::Execute {
             contract_addr: HumanAddr("contract".to_string()),
-   
+            callback_code_hash: "this_is_a_hash_of_a_code".to_string(),
+            msg: Snip20ReceiveMsg::new(
+                HumanAddr("bob".to_string()),
+                HumanAddr("bob".to_string()),
+                Uint128(1
