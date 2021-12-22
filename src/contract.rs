@@ -1050,4 +1050,14 @@ mod tests {
             msg: Snip20ReceiveMsg::new(
                 HumanAddr("bob".to_string()),
                 HumanAddr("bob".to_string()),
-                Uint128(1
+                Uint128(100),
+                Some(to_binary("hey hey you you").unwrap())
+            )
+            .into_binary()
+            .unwrap(),
+            send: vec![]
+        })));
+    }
+
+    #[test]
+    fn test_handl
