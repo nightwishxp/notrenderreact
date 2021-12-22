@@ -1060,4 +1060,9 @@ mod tests {
     }
 
     #[test]
-    fn test_handl
+    fn test_handle_register_receive() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string()),
+            amount: Uint128(5000),
+        }]);
+      
