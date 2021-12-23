@@ -1065,4 +1065,11 @@ mod tests {
             address: HumanAddr("bob".to_string()),
             amount: Uint128(5000),
         }]);
-      
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let handle_msg = HandleMsg::RegisterReceive {
+            code_hash: "this_is_a_hash_of_
