@@ -1077,4 +1077,9 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("contract", &[]), handle_msg);
         let result = handle_result.unwrap();
-        assert!(ensur
+        assert!(ensure_success(result));
+
+        let hash = get_receiver_hash(&deps.storage, &HumanAddr("contract".to_string()))
+            .unwrap()
+            .unwrap();
+        assert_eq!(hash, "this_is_a_hash_of_a_code".to_string
