@@ -1082,4 +1082,10 @@ mod tests {
         let hash = get_receiver_hash(&deps.storage, &HumanAddr("contract".to_string()))
             .unwrap()
             .unwrap();
-        assert_eq!(hash, "this_is_a_hash_of_a_code".to_string
+        assert_eq!(hash, "this_is_a_hash_of_a_code".to_string());
+    }
+
+    #[test]
+    fn test_handle_create_viewing_key() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string())
