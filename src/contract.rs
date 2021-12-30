@@ -1102,4 +1102,9 @@ mod tests {
             padding: None,
         };
         let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
-        asse
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+        let answer: HandleAnswer = from_binary(&handle_resu
