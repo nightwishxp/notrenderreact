@@ -1107,4 +1107,11 @@ mod tests {
             "handle() failed: {}",
             handle_result.err().unwrap()
         );
-        let answer: HandleAnswer = from_binary(&handle_resu
+        let answer: HandleAnswer = from_binary(&handle_result.unwrap().data.unwrap()).unwrap();
+
+        let key = match answer {
+            HandleAnswer::CreateViewingKey { key } => key,
+            _ => panic!("NOPE"),
+        };
+        let bob_canonical = deps
+    
