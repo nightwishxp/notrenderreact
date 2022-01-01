@@ -1114,4 +1114,8 @@ mod tests {
             _ => panic!("NOPE"),
         };
         let bob_canonical = deps
-    
+            .api
+            .canonical_address(&HumanAddr("bob".to_string()))
+            .unwrap();
+        let saved_vk = read_viewing_key(&deps.storage, &bob_canonical).unwrap();
+        assert!(key.check_viewing_key(saved
