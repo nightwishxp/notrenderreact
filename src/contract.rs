@@ -1118,4 +1118,11 @@ mod tests {
             .canonical_address(&HumanAddr("bob".to_string()))
             .unwrap();
         let saved_vk = read_viewing_key(&deps.storage, &bob_canonical).unwrap();
-        assert!(key.check_viewing_key(saved
+        assert!(key.check_viewing_key(saved_vk.as_slice()));
+    }
+
+    #[test]
+    fn test_handle_set_viewing_key() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string()),
+            a
