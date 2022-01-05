@@ -1125,4 +1125,13 @@ mod tests {
     fn test_handle_set_viewing_key() {
         let (init_result, mut deps) = init_helper(vec![InitialBalance {
             address: HumanAddr("bob".to_string()),
-            a
+            amount: Uint128(5000),
+        }]);
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        // Set VK
+        let handle_msg = Hand
