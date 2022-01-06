@@ -1134,4 +1134,9 @@ mod tests {
         );
 
         // Set VK
-        let handle_msg = Hand
+        let handle_msg = HandleMsg::SetViewingKey {
+            key: "hi lol".to_string(),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        let u
