@@ -1151,4 +1151,9 @@ mod tests {
 
         // Set valid VK
         let actual_vk = ViewingKey("x".to_string().repeat(VIEWING_KEY_SIZE));
-        let handle_msg = Handle
+        let handle_msg = HandleMsg::SetViewingKey {
+            key: actual_vk.0.clone(),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+   
