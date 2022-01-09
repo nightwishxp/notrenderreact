@@ -1156,4 +1156,8 @@ mod tests {
             padding: None,
         };
         let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
-   
+        let unwrapped_result: HandleAnswer =
+            from_binary(&handle_result.unwrap().data.unwrap()).unwrap();
+        assert_eq!(
+            to_binary(&unwrapped_result).unwrap(),
+            to_
