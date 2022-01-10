@@ -1160,4 +1160,10 @@ mod tests {
             from_binary(&handle_result.unwrap().data.unwrap()).unwrap();
         assert_eq!(
             to_binary(&unwrapped_result).unwrap(),
-            to_
+            to_binary(&HandleAnswer::SetViewingKey { status: Success }).unwrap(),
+        );
+        let bob_canonical = deps
+            .api
+            .canonical_address(&HumanAddr("bob".to_string()))
+            .unwrap();
+        let saved_vk =
