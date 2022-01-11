@@ -1166,4 +1166,10 @@ mod tests {
             .api
             .canonical_address(&HumanAddr("bob".to_string()))
             .unwrap();
-        let saved_vk =
+        let saved_vk = read_viewing_key(&deps.storage, &bob_canonical).unwrap();
+        assert!(actual_vk.check_viewing_key(&saved_vk));
+    }
+
+    #[test]
+    fn test_handle_transfer_from() {
+        let (init_r
