@@ -1178,4 +1178,10 @@ mod tests {
         }]);
         assert!(
             init_result.is_ok(),
-           
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        // Transfer before allowance
+        let handle_msg = HandleMsg::TransferFrom {
+            owner: HumanAddr("bob".to
