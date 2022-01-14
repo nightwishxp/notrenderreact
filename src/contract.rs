@@ -1190,3 +1190,8 @@ mod tests {
             padding: None,
         };
         let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
+        let error = extract_error_msg(handle_result);
+        assert!(error.contains("insufficient allowance"));
+
+        // Transfer more than allowance
+        let handle_msg = 
