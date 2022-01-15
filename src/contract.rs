@@ -1194,4 +1194,10 @@ mod tests {
         assert!(error.contains("insufficient allowance"));
 
         // Transfer more than allowance
-        let handle_msg = 
+        let handle_msg = HandleMsg::IncreaseAllowance {
+            spender: HumanAddr("alice".to_string()),
+            amount: Uint128(2000),
+            padding: None,
+            expiration: Some(1_571_797_420),
+        };
+        
