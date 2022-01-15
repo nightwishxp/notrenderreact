@@ -1200,4 +1200,9 @@ mod tests {
             padding: None,
             expiration: Some(1_571_797_420),
         };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
         
