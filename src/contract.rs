@@ -1205,4 +1205,9 @@ mod tests {
             handle_result.is_ok(),
             "handle() failed: {}",
             handle_result.err().unwrap()
-        
+        );
+        let handle_msg = HandleMsg::TransferFrom {
+            owner: HumanAddr("bob".to_string()),
+            recipient: HumanAddr("alice".to_string()),
+            amount: Uint128(2500),
+            padding: None
