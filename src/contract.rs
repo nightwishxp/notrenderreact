@@ -1210,4 +1210,8 @@ mod tests {
             owner: HumanAddr("bob".to_string()),
             recipient: HumanAddr("alice".to_string()),
             amount: Uint128(2500),
-            padding: None
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
+        let error = extract_error_msg(handle_result);
+        assert!(error.contains("insufficient allo
