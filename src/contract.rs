@@ -1219,4 +1219,11 @@ mod tests {
         // Transfer after allowance expired
         let handle_msg = HandleMsg::TransferFrom {
             owner: HumanAddr("bob".to_string()),
-            recipient: 
+            recipient: HumanAddr("alice".to_string()),
+            amount: Uint128(2000),
+            padding: None,
+        };
+        let handle_result = handle(
+            &mut deps,
+            Env {
+              
