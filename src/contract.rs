@@ -1226,4 +1226,9 @@ mod tests {
         let handle_result = handle(
             &mut deps,
             Env {
-              
+                block: BlockInfo {
+                    height: 12_345,
+                    time: 1_571_797_420,
+                    chain_id: "cosmos-testnet-14002".to_string(),
+                },
+             
