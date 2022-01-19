@@ -1231,4 +1231,10 @@ mod tests {
                     time: 1_571_797_420,
                     chain_id: "cosmos-testnet-14002".to_string(),
                 },
-             
+                message: MessageInfo {
+                    sender: HumanAddr("bob".to_string()),
+                    sent_funds: vec![],
+                },
+                contract: ContractInfo {
+                    address: HumanAddr::from(MOCK_CONTRACT_ADDR),
+      
