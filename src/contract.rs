@@ -1237,4 +1237,10 @@ mod tests {
                 },
                 contract: ContractInfo {
                     address: HumanAddr::from(MOCK_CONTRACT_ADDR),
-      
+                },
+                contract_key: Some("".to_string()),
+                contract_code_hash: "".to_string(),
+            },
+            handle_msg,
+        );
+        let error = extract_error_msg(h
