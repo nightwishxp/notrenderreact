@@ -1243,4 +1243,10 @@ mod tests {
             },
             handle_msg,
         );
-        let error = extract_error_msg(h
+        let error = extract_error_msg(handle_result);
+        assert!(error.contains("insufficient allowance"));
+
+        // Sanity check
+        let handle_msg = HandleMsg::TransferFrom {
+            owner: HumanAddr("bob".to_string()),
+            recipient
