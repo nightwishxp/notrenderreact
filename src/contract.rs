@@ -1249,4 +1249,10 @@ mod tests {
         // Sanity check
         let handle_msg = HandleMsg::TransferFrom {
             owner: HumanAddr("bob".to_string()),
-            recipient
+            recipient: HumanAddr("alice".to_string()),
+            amount: Uint128(2000),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
+        assert!(
+      
