@@ -1255,4 +1255,10 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
         assert!(
-      
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+        let bob_canonical = deps
+            .api
+            .canonical_address(&HumanAddr("bob".to_str
