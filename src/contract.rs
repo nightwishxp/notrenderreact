@@ -1267,4 +1267,7 @@ mod tests {
             .api
             .canonical_address(&HumanAddr("alice".to_string()))
             .unwrap();
-        let bob_balance = crate::state:
+        let bob_balance = crate::state::ReadonlyBalances::from_storage(&deps.storage)
+            .account_amount(&bob_canonical);
+        let alice_balance = crate::state::ReadonlyBalances::from_storage(&deps.storage)
+            .account_amou
