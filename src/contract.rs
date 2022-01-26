@@ -1274,4 +1274,10 @@ mod tests {
         assert_eq!(bob_balance, 5000 - 2000);
         assert_eq!(alice_balance, 2000);
         let total_supply = ReadonlyConfig::from_storage(&deps.storage).total_supply();
-       
+        assert_eq!(total_supply, 5000);
+
+        // Second send more than allowance
+        let handle_msg = HandleMsg::TransferFrom {
+            owner: HumanAddr("bob".to_string()),
+            recipient: HumanAddr("alice".to_string()),
+     
