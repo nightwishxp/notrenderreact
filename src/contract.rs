@@ -1280,4 +1280,9 @@ mod tests {
         let handle_msg = HandleMsg::TransferFrom {
             owner: HumanAddr("bob".to_string()),
             recipient: HumanAddr("alice".to_string()),
-     
+            amount: Uint128(1),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
+        let error = extract_error_msg(handle_result);
+        assert!(err
