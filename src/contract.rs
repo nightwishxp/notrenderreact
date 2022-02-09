@@ -1285,4 +1285,10 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
         let error = extract_error_msg(handle_result);
-        assert!(err
+        assert!(error.contains("insufficient allowance"));
+    }
+
+    #[test]
+    fn test_handle_send_from() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".
