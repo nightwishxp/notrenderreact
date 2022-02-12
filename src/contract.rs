@@ -1300,4 +1300,9 @@ mod tests {
             init_result.err().unwrap()
         );
 
-        /
+        // Send before allowance
+        let handle_msg = HandleMsg::SendFrom {
+            owner: HumanAddr("bob".to_string()),
+            recipient: HumanAddr("alice".to_string()),
+            amount: Uint128(2500),
+      
