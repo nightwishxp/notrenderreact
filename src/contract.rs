@@ -1310,4 +1310,9 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
         let error = extract_error_msg(handle_result);
-        assert!(
+        assert!(error.contains("insufficient allowance"));
+
+        // Send more than allowance
+        let handle_msg = HandleMsg::IncreaseAllowance {
+            spender: HumanAddr("alice".to_string()),
+            amount: Uint128(20
