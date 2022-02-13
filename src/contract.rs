@@ -1315,4 +1315,11 @@ mod tests {
         // Send more than allowance
         let handle_msg = HandleMsg::IncreaseAllowance {
             spender: HumanAddr("alice".to_string()),
-            amount: Uint128(20
+            amount: Uint128(2000),
+            padding: None,
+            expiration: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() f
