@@ -1322,4 +1322,10 @@ mod tests {
         let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
         assert!(
             handle_result.is_ok(),
-            "handle() f
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+        let handle_msg = HandleMsg::SendFrom {
+            owner: HumanAddr("bob".to_string()),
+            recipient: HumanAddr("alice".to_string()),
+            amount:
