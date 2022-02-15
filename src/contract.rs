@@ -1333,4 +1333,10 @@ mod tests {
             padding: None,
         };
         let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
-        let error = extract_error_msg(handle_res
+        let error = extract_error_msg(handle_result);
+        assert!(error.contains("insufficient allowance"));
+
+        // Sanity check
+        let handle_msg = HandleMsg::RegisterReceive {
+            code_hash: "lolz".to_string(),
+            padding: 
