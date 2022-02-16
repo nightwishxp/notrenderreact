@@ -1339,4 +1339,10 @@ mod tests {
         // Sanity check
         let handle_msg = HandleMsg::RegisterReceive {
             code_hash: "lolz".to_string(),
-            padding: 
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("contract", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            han
