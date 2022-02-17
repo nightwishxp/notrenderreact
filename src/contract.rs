@@ -1345,4 +1345,8 @@ mod tests {
         assert!(
             handle_result.is_ok(),
             "handle() failed: {}",
-            han
+            handle_result.err().unwrap()
+        );
+        let send_msg = Binary::from(r#"{ "some_msg": { "some_key": "some_val" } }"#.as_bytes());
+        let snip20_msg = Snip20ReceiveMsg::new(
+            HumanA
