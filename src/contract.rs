@@ -1349,4 +1349,10 @@ mod tests {
         );
         let send_msg = Binary::from(r#"{ "some_msg": { "some_key": "some_val" } }"#.as_bytes());
         let snip20_msg = Snip20ReceiveMsg::new(
-            HumanA
+            HumanAddr("alice".to_string()),
+            HumanAddr("bob".to_string()),
+            Uint128(2000),
+            Some(send_msg.clone()),
+        );
+        let handle_msg = HandleMsg::SendFrom {
+            owner: HumanAddr
