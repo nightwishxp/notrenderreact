@@ -1355,4 +1355,10 @@ mod tests {
             Some(send_msg.clone()),
         );
         let handle_msg = HandleMsg::SendFrom {
-            owner: HumanAddr
+            owner: HumanAddr("bob".to_string()),
+            recipient: HumanAddr("contract".to_string()),
+            amount: Uint128(2000),
+            msg: Some(send_msg),
+            padding: None,
+        };
+        let handle_result =
