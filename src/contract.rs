@@ -1361,4 +1361,10 @@ mod tests {
             msg: Some(send_msg),
             padding: None,
         };
-        let handle_result =
+        let handle_result = handle(&mut deps, mock_env("alice", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+        assert!(handle_
