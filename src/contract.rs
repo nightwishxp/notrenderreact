@@ -1367,4 +1367,11 @@ mod tests {
             "handle() failed: {}",
             handle_result.err().unwrap()
         );
-        assert!(handle_
+        assert!(handle_result.unwrap().messages.contains(
+            &snip20_msg
+                .into_cosmos_msg("lolz".to_string(), HumanAddr("contract".to_string()))
+                .unwrap()
+        ));
+        let bob_canonical = deps
+            .api
+    
