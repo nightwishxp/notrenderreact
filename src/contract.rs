@@ -1374,4 +1374,9 @@ mod tests {
         ));
         let bob_canonical = deps
             .api
-    
+            .canonical_address(&HumanAddr("bob".to_string()))
+            .unwrap();
+        let contract_canonical = deps
+            .api
+            .canonical_address(&HumanAddr("contract".to_string()))
+            .unwrap()
