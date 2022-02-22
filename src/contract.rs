@@ -1379,4 +1379,8 @@ mod tests {
         let contract_canonical = deps
             .api
             .canonical_address(&HumanAddr("contract".to_string()))
-            .unwrap()
+            .unwrap();
+        let bob_balance = crate::state::ReadonlyBalances::from_storage(&deps.storage)
+            .account_amount(&bob_canonical);
+        let contract_balance = crate::state::ReadonlyBalances::from_storage(&deps.storage)
+        
