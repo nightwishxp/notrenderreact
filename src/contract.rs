@@ -1383,4 +1383,7 @@ mod tests {
         let bob_balance = crate::state::ReadonlyBalances::from_storage(&deps.storage)
             .account_amount(&bob_canonical);
         let contract_balance = crate::state::ReadonlyBalances::from_storage(&deps.storage)
-        
+            .account_amount(&contract_canonical);
+        assert_eq!(bob_balance, 5000 - 2000);
+        assert_eq!(contract_balance, 2000);
+        let total_supply = ReadonlyConfig::from_storage(&deps.storage).total_supply(
