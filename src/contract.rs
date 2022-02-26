@@ -1404,4 +1404,10 @@ mod tests {
 
     #[test]
     fn test_handle_decrease_allowance() {
-        let (init_result, mut deps) = i
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string()),
+            amount: Uint128(5000),
+        }]);
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
