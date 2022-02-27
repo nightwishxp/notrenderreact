@@ -1411,3 +1411,10 @@ mod tests {
         assert!(
             init_result.is_ok(),
             "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let handle_msg = HandleMsg::DecreaseAllowance {
+            spender: HumanAddr("alice".to_string()),
+            amount: Uint128(2000),
+         
