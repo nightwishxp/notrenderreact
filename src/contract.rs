@@ -1417,4 +1417,11 @@ mod tests {
         let handle_msg = HandleMsg::DecreaseAllowance {
             spender: HumanAddr("alice".to_string()),
             amount: Uint128(2000),
-         
+            padding: None,
+            expiration: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+       
