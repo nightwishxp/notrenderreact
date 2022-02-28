@@ -1424,4 +1424,11 @@ mod tests {
         assert!(
             handle_result.is_ok(),
             "handle() failed: {}",
-       
+            handle_result.err().unwrap()
+        );
+
+        let bob_canonical = deps
+            .api
+            .canonical_address(&HumanAddr("bob".to_string()))
+            .unwrap();
+        let alice_canonical 
