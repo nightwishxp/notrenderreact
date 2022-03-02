@@ -1431,4 +1431,9 @@ mod tests {
             .api
             .canonical_address(&HumanAddr("bob".to_string()))
             .unwrap();
-        let alice_canonical 
+        let alice_canonical = deps
+            .api
+            .canonical_address(&HumanAddr("alice".to_string()))
+            .unwrap();
+
+        let allowance = read_allowance(&deps.storage, &bob_canonical, &alice_c
