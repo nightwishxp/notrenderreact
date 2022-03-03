@@ -1436,4 +1436,13 @@ mod tests {
             .canonical_address(&HumanAddr("alice".to_string()))
             .unwrap();
 
-        let allowance = read_allowance(&deps.storage, &bob_canonical, &alice_c
+        let allowance = read_allowance(&deps.storage, &bob_canonical, &alice_canonical).unwrap();
+        assert_eq!(
+            allowance,
+            crate::state::Allowance {
+                amount: 0,
+                expiration: None
+            }
+        );
+
+        let handle_msg = Handle
