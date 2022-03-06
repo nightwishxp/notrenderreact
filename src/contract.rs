@@ -1445,4 +1445,10 @@ mod tests {
             }
         );
 
-        let handle_msg = Handle
+        let handle_msg = HandleMsg::IncreaseAllowance {
+            spender: HumanAddr("alice".to_string()),
+            amount: Uint128(2000),
+            padding: None,
+            expiration: None,
+        };
+        let 
