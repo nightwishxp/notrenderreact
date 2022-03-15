@@ -1464,4 +1464,11 @@ mod tests {
             padding: None,
             expiration: None,
         };
-        let handle_result = 
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+
+        let allowance = 
