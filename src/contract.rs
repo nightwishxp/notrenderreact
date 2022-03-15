@@ -1458,4 +1458,10 @@ mod tests {
             handle_result.err().unwrap()
         );
 
-  
+        let handle_msg = HandleMsg::DecreaseAllowance {
+            spender: HumanAddr("alice".to_string()),
+            amount: Uint128(50),
+            padding: None,
+            expiration: None,
+        };
+        let handle_result = 
