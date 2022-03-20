@@ -1476,4 +1476,13 @@ mod tests {
             allowance,
             crate::state::Allowance {
                 amount: 1950,
-                expirat
+                expiration: None
+            }
+        );
+    }
+
+    #[test]
+    fn test_handle_increase_allowance() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string()),
+     
