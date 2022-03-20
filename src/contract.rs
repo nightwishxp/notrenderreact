@@ -1493,4 +1493,10 @@ mod tests {
             init_result.err().unwrap()
         );
 
-        let handle_msg
+        let handle_msg = HandleMsg::IncreaseAllowance {
+            spender: HumanAddr("alice".to_string()),
+            amount: Uint128(2000),
+            padding: None,
+            expiration: None,
+        };
+        let hand
