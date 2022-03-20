@@ -1499,4 +1499,11 @@ mod tests {
             padding: None,
             expiration: None,
         };
-        let hand
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+
+ 
