@@ -1512,4 +1512,10 @@ mod tests {
             .unwrap();
         let alice_canonical = deps
             .api
-            .cano
+            .canonical_address(&HumanAddr("alice".to_string()))
+            .unwrap();
+
+        let allowance = read_allowance(&deps.storage, &bob_canonical, &alice_canonical).unwrap();
+        assert_eq!(
+            allowance,
+            c
