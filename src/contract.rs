@@ -1518,4 +1518,11 @@ mod tests {
         let allowance = read_allowance(&deps.storage, &bob_canonical, &alice_canonical).unwrap();
         assert_eq!(
             allowance,
-            c
+            crate::state::Allowance {
+                amount: 2000,
+                expiration: None
+            }
+        );
+
+        let handle_msg = HandleMsg::IncreaseAllowance {
+            spender: HumanAddr("ali
