@@ -1506,4 +1506,10 @@ mod tests {
             handle_result.err().unwrap()
         );
 
- 
+        let bob_canonical = deps
+            .api
+            .canonical_address(&HumanAddr("bob".to_string()))
+            .unwrap();
+        let alice_canonical = deps
+            .api
+            .cano
