@@ -1537,4 +1537,11 @@ mod tests {
             handle_result.err().unwrap()
         );
 
-        let allowance = read_allowance(&deps.storage, &bob_canonical, &
+        let allowance = read_allowance(&deps.storage, &bob_canonical, &alice_canonical).unwrap();
+        assert_eq!(
+            allowance,
+            crate::state::Allowance {
+                amount: 4000,
+                expiration: None
+            }
+        )
