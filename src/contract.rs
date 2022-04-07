@@ -1544,4 +1544,11 @@ mod tests {
                 amount: 4000,
                 expiration: None
             }
-        )
+        );
+    }
+
+    #[test]
+    fn test_handle_change_admin() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string()),
+  
