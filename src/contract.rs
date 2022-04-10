@@ -1559,4 +1559,10 @@ mod tests {
             init_result.err().unwrap()
         );
 
-        let handl
+        let handle_msg = HandleMsg::ChangeAdmin {
+            address: HumanAddr("bob".to_string()),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("admin", &[]), handle_msg);
+        assert!(
+           
