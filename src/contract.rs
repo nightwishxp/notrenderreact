@@ -1571,4 +1571,12 @@ mod tests {
         );
 
         let admin = ReadonlyConfig::from_storage(&deps.storage)
-        
+            .constants()
+            .unwrap()
+            .admin;
+        assert_eq!(admin, HumanAddr("bob".to_string()));
+    }
+
+    #[test]
+    fn test_handle_set_contract_status() {
+        let (init_result, mut deps) = init_helper(vec![Ini
