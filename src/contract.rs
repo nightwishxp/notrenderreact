@@ -1586,4 +1586,11 @@ mod tests {
         assert!(
             init_result.is_ok(),
             "Init failed: {}",
-            init_result.err().unwrap(
+            init_result.err().unwrap()
+        );
+
+        let handle_msg = HandleMsg::SetContractStatus {
+            level: ContractStatusLevel::StopAll,
+            padding: None,
+        };
+        let handle_result = handle(&mut d
