@@ -1600,4 +1600,9 @@ mod tests {
             handle_result.err().unwrap()
         );
 
-        l
+        let contract_status = ReadonlyConfig::from_storage(&deps.storage).contract_status();
+        assert!(matches!(contract_status, ContractStatusLevel::StopAll{..}));
+    }
+
+    #[test]
+    fn test_handle_redeem() 
