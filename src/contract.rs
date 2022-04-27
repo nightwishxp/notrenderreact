@@ -1620,4 +1620,10 @@ mod tests {
             amount: Uint128(1000),
             denom: None,
             padding: None,
-        
+        };
+        let handle_result = handle(&mut deps, mock_env("butler", &[]), handle_msg);
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+      
