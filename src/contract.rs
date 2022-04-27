@@ -1626,4 +1626,11 @@ mod tests {
             handle_result.is_ok(),
             "handle() failed: {}",
             handle_result.err().unwrap()
-      
+        );
+
+        let balances = ReadonlyBalances::from_storage(&deps.storage);
+        let canonical = deps
+            .api
+            .canonical_address(&HumanAddr("butler".to_string()))
+            .unwrap();
+        assert_eq!(
