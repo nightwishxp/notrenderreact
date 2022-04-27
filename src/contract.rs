@@ -1633,4 +1633,10 @@ mod tests {
             .api
             .canonical_address(&HumanAddr("butler".to_string()))
             .unwrap();
-        assert_eq!(
+        assert_eq!(balances.account_amount(&canonical), 4000)
+    }
+
+    #[test]
+    fn test_handle_deposit() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("lebron
