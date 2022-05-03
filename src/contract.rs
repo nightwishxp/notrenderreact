@@ -1648,4 +1648,10 @@ mod tests {
             init_result.err().unwrap()
         );
 
-        let ha
+        let handle_msg = HandleMsg::Deposit { padding: None };
+        let handle_result = handle(
+            &mut deps,
+            mock_env(
+                "lebron",
+                &[Coin {
+                    denom: "u
