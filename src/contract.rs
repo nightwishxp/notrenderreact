@@ -1654,4 +1654,12 @@ mod tests {
             mock_env(
                 "lebron",
                 &[Coin {
-                    denom: "u
+                    denom: "uscrt".to_string(),
+                    amount: Uint128(1000),
+                }],
+            ),
+            handle_msg,
+        );
+        assert!(
+            handle_result.is_ok(),
+            "handle() failed: {}",
