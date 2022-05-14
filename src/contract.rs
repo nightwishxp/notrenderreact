@@ -1663,3 +1663,10 @@ mod tests {
         assert!(
             handle_result.is_ok(),
             "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+
+        let balances = ReadonlyBalances::from_storage(&deps.storage);
+        let canonical = deps
+            .api
+            .canonical_address(&HumanAddr("lebron".to
