@@ -1676,4 +1676,10 @@ mod tests {
 
     #[test]
     fn test_handle_admin_commands() {
-        let admin_err = "Admin commands can only b
+        let admin_err = "Admin commands can only be run from admin address".to_string();
+
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("lebron".to_string()),
+            amount: Uint128(5000),
+        }]);
+        assert!(
