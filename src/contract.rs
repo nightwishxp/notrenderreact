@@ -1669,4 +1669,11 @@ mod tests {
         let balances = ReadonlyBalances::from_storage(&deps.storage);
         let canonical = deps
             .api
-            .canonical_address(&HumanAddr("lebron".to
+            .canonical_address(&HumanAddr("lebron".to_string()))
+            .unwrap();
+        assert_eq!(balances.account_amount(&canonical), 6000)
+    }
+
+    #[test]
+    fn test_handle_admin_commands() {
+        let admin_err = "Admin commands can only b
