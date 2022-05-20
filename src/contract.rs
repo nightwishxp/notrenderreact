@@ -1700,4 +1700,10 @@ mod tests {
             address: HumanAddr("not_admin".to_string()),
             padding: None,
         };
-        let handle_result = 
+        let handle_result = handle(&mut deps, mock_env("not_admin", &[]), change_admin_msg);
+        let error = extract_error_msg(handle_result);
+        assert!(error.contains(&admin_err.clone()));
+    }
+
+    #[test]
+    fn test_handle_pause_w
