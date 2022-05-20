@@ -1694,4 +1694,10 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("not_admin", &[]), pause_msg);
         let error = extract_error_msg(handle_result);
-        assert!(error.contain
+        assert!(error.contains(&admin_err.clone()));
+
+        let change_admin_msg = HandleMsg::ChangeAdmin {
+            address: HumanAddr("not_admin".to_string()),
+            padding: None,
+        };
+        let handle_result = 
