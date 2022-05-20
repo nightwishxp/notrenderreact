@@ -1690,4 +1690,8 @@ mod tests {
 
         let pause_msg = HandleMsg::SetContractStatus {
             level: ContractStatusLevel::StopAllButRedeems,
-   
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("not_admin", &[]), pause_msg);
+        let error = extract_error_msg(handle_result);
+        assert!(error.contain
