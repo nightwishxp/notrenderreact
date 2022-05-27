@@ -1711,4 +1711,11 @@ mod tests {
             address: HumanAddr("lebron".to_string()),
             amount: Uint128(5000),
         }]);
-        asse
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let pause_msg = HandleMsg::SetContractStatus {
+            level: Contra
