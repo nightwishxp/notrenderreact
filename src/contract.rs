@@ -1718,4 +1718,10 @@ mod tests {
         );
 
         let pause_msg = HandleMsg::SetContractStatus {
-            level: Contra
+            level: ContractStatusLevel::StopAllButRedeems,
+            padding: None,
+        };
+
+        let handle_result = handle(&mut deps, mock_env("admin", &[]), pause_msg);
+        assert!(
+            handle_result.is_ok(),
