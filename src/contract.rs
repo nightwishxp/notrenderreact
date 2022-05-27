@@ -1706,4 +1706,9 @@ mod tests {
     }
 
     #[test]
-    fn test_handle_pause_w
+    fn test_handle_pause_with_withdrawals() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("lebron".to_string()),
+            amount: Uint128(5000),
+        }]);
+        asse
