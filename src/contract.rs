@@ -1737,4 +1737,11 @@ mod tests {
         let handle_result = handle(&mut deps, mock_env("admin", &[]), send_msg);
         let error = extract_error_msg(handle_result);
         assert_eq!(
-     
+            error,
+            "This contract is stopped and this action is not allowed".to_string()
+        );
+
+        let withdraw_msg = HandleMsg::Redeem {
+            amount: Uint128(5000),
+            denom: None,
+       
