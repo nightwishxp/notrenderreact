@@ -1744,4 +1744,10 @@ mod tests {
         let withdraw_msg = HandleMsg::Redeem {
             amount: Uint128(5000),
             denom: None,
-       
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("lebron", &[]), withdraw_msg);
+        assert!(
+            handle_result.is_ok(),
+            "Withdraw failed: {}",
+        
