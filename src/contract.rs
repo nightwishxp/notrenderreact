@@ -1750,4 +1750,11 @@ mod tests {
         assert!(
             handle_result.is_ok(),
             "Withdraw failed: {}",
-        
+            handle_result.err().unwrap()
+        );
+    }
+
+    #[test]
+    fn test_handle_pause_all() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("lebron"
