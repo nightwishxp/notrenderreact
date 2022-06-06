@@ -1757,4 +1757,13 @@ mod tests {
     #[test]
     fn test_handle_pause_all() {
         let (init_result, mut deps) = init_helper(vec![InitialBalance {
-            address: HumanAddr("lebron"
+            address: HumanAddr("lebron".to_string()),
+            amount: Uint128(5000),
+        }]);
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let pause_msg = HandleMsg:
