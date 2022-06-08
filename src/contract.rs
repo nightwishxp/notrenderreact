@@ -1779,4 +1779,9 @@ mod tests {
         );
 
         let send_msg = HandleMsg::Transfer {
-            recipient: Hum
+            recipient: HumanAddr("account".to_string()),
+            amount: Uint128(123),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("admin", &[]), send_msg);
+        let error = extract_error_msg(hand
