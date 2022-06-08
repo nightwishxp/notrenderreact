@@ -1766,4 +1766,11 @@ mod tests {
             init_result.err().unwrap()
         );
 
-        let pause_msg = HandleMsg:
+        let pause_msg = HandleMsg::SetContractStatus {
+            level: ContractStatusLevel::StopAll,
+            padding: None,
+        };
+
+        let handle_result = handle(&mut deps, mock_env("admin", &[]), pause_msg);
+        assert!(
+            handle
