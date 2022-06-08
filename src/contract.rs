@@ -1773,4 +1773,10 @@ mod tests {
 
         let handle_result = handle(&mut deps, mock_env("admin", &[]), pause_msg);
         assert!(
-            handle
+            handle_result.is_ok(),
+            "Pause handle failed: {}",
+            handle_result.err().unwrap()
+        );
+
+        let send_msg = HandleMsg::Transfer {
+            recipient: Hum
