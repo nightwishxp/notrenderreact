@@ -1791,4 +1791,10 @@ mod tests {
         );
 
         let withdraw_msg = HandleMsg::Redeem {
-            amoun
+            amount: Uint128(5000),
+            denom: None,
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("lebron", &[]), withdraw_msg);
+        let error = extract_error_msg(handle_result);
+        assert_e
