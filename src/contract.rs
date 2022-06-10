@@ -1807,4 +1807,11 @@ mod tests {
 
     #[test]
     fn test_authenticated_queries() {
-        let (init_result, mut deps
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("giannis".to_string()),
+            amount: Uint128(5000),
+        }]);
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
+            init
