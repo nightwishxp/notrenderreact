@@ -1797,4 +1797,14 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("lebron", &[]), withdraw_msg);
         let error = extract_error_msg(handle_result);
-        assert_e
+        assert_eq!(
+            error,
+            "This contract is stopped and this action is not allowed".to_string()
+        );
+    }
+
+    // Query tests
+
+    #[test]
+    fn test_authenticated_queries() {
+        let (init_result, mut deps
