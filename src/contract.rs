@@ -1814,4 +1814,10 @@ mod tests {
         assert!(
             init_result.is_ok(),
             "Init failed: {}",
-            init
+            init_result.err().unwrap()
+        );
+
+        let no_vk_yet_query_msg = QueryMsg::Balance {
+            address: HumanAddr("giannis".to_string()),
+            key: "no_vk_yet".to_string(),
+       
