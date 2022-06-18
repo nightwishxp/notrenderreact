@@ -1820,4 +1820,9 @@ mod tests {
         let no_vk_yet_query_msg = QueryMsg::Balance {
             address: HumanAddr("giannis".to_string()),
             key: "no_vk_yet".to_string(),
-       
+        };
+        let query_result = query(&deps, no_vk_yet_query_msg);
+        let error = extract_error_msg(query_result);
+        assert_eq!(
+            error,
+            "Wrong viewing key for this address or viewing key not
