@@ -1825,4 +1825,11 @@ mod tests {
         let error = extract_error_msg(query_result);
         assert_eq!(
             error,
-            "Wrong viewing key for this address or viewing key not
+            "Wrong viewing key for this address or viewing key not set".to_string()
+        );
+
+        let create_vk_msg = HandleMsg::CreateViewingKey {
+            entropy: "34".to_string(),
+            padding: None,
+        };
+        let handle_response = handle(&mut deps, mock_env
