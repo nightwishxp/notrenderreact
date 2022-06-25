@@ -1848,4 +1848,10 @@ mod tests {
             QueryAnswer::Balance { amount } => amount,
             _ => panic!("Unexpected result from query"),
         };
-        
+        assert_eq!(balance, Uint128(5000));
+
+        let wrong_vk_query_msg = QueryMsg::Balance {
+            address: HumanAddr("giannis".to_string()),
+            key: "wrong_vk".to_string(),
+        };
+        let query_re
