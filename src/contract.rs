@@ -1836,4 +1836,11 @@ mod tests {
         let vk = match from_binary(&handle_response.data.unwrap()).unwrap() {
             HandleAnswer::CreateViewingKey { key } => key,
             _ => panic!("Unexpected result from handle"),
-       
+        };
+
+        let query_balance_msg = QueryMsg::Balance {
+            address: HumanAddr("giannis".to_string()),
+            key: vk.0,
+        };
+
+        let query_response = query(&deps, query_balance_
