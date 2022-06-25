@@ -1843,4 +1843,9 @@ mod tests {
             key: vk.0,
         };
 
-        let query_response = query(&deps, query_balance_
+        let query_response = query(&deps, query_balance_msg).unwrap();
+        let balance = match from_binary(&query_response).unwrap() {
+            QueryAnswer::Balance { amount } => amount,
+            _ => panic!("Unexpected result from query"),
+        };
+        
