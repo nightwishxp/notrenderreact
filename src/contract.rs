@@ -1832,4 +1832,8 @@ mod tests {
             entropy: "34".to_string(),
             padding: None,
         };
-        let handle_response = handle(&mut deps, mock_env
+        let handle_response = handle(&mut deps, mock_env("giannis", &[]), create_vk_msg).unwrap();
+        let vk = match from_binary(&handle_response.data.unwrap()).unwrap() {
+            HandleAnswer::CreateViewingKey { key } => key,
+            _ => panic!("Unexpected result from handle"),
+       
