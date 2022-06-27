@@ -1858,4 +1858,12 @@ mod tests {
         let error = extract_error_msg(query_result);
         assert_eq!(
             error,
-            "Wrong viewing key for this address or viewing key 
+            "Wrong viewing key for this address or viewing key not set".to_string()
+        );
+    }
+
+    #[test]
+    fn test_query_token_info() {
+        let init_name = "sec-sec".to_string();
+        let init_admin = HumanAddr("admin".to_string());
+       
