@@ -1854,4 +1854,8 @@ mod tests {
             address: HumanAddr("giannis".to_string()),
             key: "wrong_vk".to_string(),
         };
-        let query_re
+        let query_result = query(&deps, wrong_vk_query_msg);
+        let error = extract_error_msg(query_result);
+        assert_eq!(
+            error,
+            "Wrong viewing key for this address or viewing key 
