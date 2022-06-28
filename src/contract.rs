@@ -1872,3 +1872,9 @@ mod tests {
             r#"{ "public_total_supply": true }"#.as_bytes(),
         ))
         .unwrap();
+        let init_supply = Uint128(5000);
+
+        let mut deps = mock_dependencies(20, &[]);
+        let env = mock_env("instantiator", &[]);
+        let init_msg = InitMsg {
+            name: init_
