@@ -1866,4 +1866,9 @@ mod tests {
     fn test_query_token_info() {
         let init_name = "sec-sec".to_string();
         let init_admin = HumanAddr("admin".to_string());
-       
+        let init_symbol = "SECSEC".to_string();
+        let init_decimals = 8;
+        let init_config: InitConfig = from_binary(&Binary::from(
+            r#"{ "public_total_supply": true }"#.as_bytes(),
+        ))
+        .unwrap();
