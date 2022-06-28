@@ -1877,4 +1877,9 @@ mod tests {
         let mut deps = mock_dependencies(20, &[]);
         let env = mock_env("instantiator", &[]);
         let init_msg = InitMsg {
-            name: init_
+            name: init_name.clone(),
+            admin: Some(init_admin.clone()),
+            symbol: init_symbol.clone(),
+            decimals: init_decimals.clone(),
+            initial_balances: Some(vec![InitialBalance {
+           
