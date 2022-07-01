@@ -1882,4 +1882,9 @@ mod tests {
             symbol: init_symbol.clone(),
             decimals: init_decimals.clone(),
             initial_balances: Some(vec![InitialBalance {
-           
+                address: HumanAddr("giannis".to_string()),
+                amount: init_supply,
+            }]),
+            prng_seed: Binary::from("lolz fun yay".as_bytes()),
+            config: Some(init_config),
+      
