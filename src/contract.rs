@@ -1887,4 +1887,12 @@ mod tests {
             }]),
             prng_seed: Binary::from("lolz fun yay".as_bytes()),
             config: Some(init_config),
-      
+        };
+        let init_result = init(&mut deps, env, init_msg);
+        assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+       
