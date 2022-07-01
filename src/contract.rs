@@ -1895,4 +1895,9 @@ mod tests {
             init_result.err().unwrap()
         );
 
-       
+        let query_msg = QueryMsg::TokenInfo {};
+        let query_result = query(&deps, query_msg);
+        assert!(
+            query_result.is_ok(),
+            "Init failed: {}",
+            query_
