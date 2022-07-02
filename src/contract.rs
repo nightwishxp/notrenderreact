@@ -1900,4 +1900,9 @@ mod tests {
         assert!(
             query_result.is_ok(),
             "Init failed: {}",
-            query_
+            query_result.err().unwrap()
+        );
+        let query_answer: QueryAnswer = from_binary(&query_result.unwrap()).unwrap();
+        match query_answer {
+            QueryAnswer::TokenInfo {
+             
