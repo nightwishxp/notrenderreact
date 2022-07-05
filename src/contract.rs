@@ -1911,4 +1911,13 @@ mod tests {
                 total_supply,
             } => {
                 assert_eq!(name, init_name);
-                assert_eq!(symbol, init_symbol)
+                assert_eq!(symbol, init_symbol);
+                assert_eq!(decimals, init_decimals);
+                assert_eq!(total_supply, Some(Uint128(5000)));
+            }
+            _ => panic!("unexpected"),
+        }
+    }
+
+    #[test]
+    fn
