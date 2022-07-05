@@ -1905,4 +1905,10 @@ mod tests {
         let query_answer: QueryAnswer = from_binary(&query_result.unwrap()).unwrap();
         match query_answer {
             QueryAnswer::TokenInfo {
-             
+                name,
+                symbol,
+                decimals,
+                total_supply,
+            } => {
+                assert_eq!(name, init_name);
+                assert_eq!(symbol, init_symbol)
