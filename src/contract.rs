@@ -1920,4 +1920,9 @@ mod tests {
     }
 
     #[test]
-    fn
+    fn test_query_allowance() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("giannis".to_string()),
+            amount: Uint128(5000),
+        }]);
+        assert!(
