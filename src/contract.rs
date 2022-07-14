@@ -1926,3 +1926,10 @@ mod tests {
             amount: Uint128(5000),
         }]);
         assert!(
+            init_result.is_ok(),
+            "Init failed: {}",
+            init_result.err().unwrap()
+        );
+
+        let handle_msg = HandleMsg::IncreaseAllowance {
+            spender: HumanAddr("lebron".to_string(
