@@ -1939,4 +1939,10 @@ mod tests {
         };
         let handle_result = handle(&mut deps, mock_env("giannis", &[]), handle_msg);
         assert!(
-    
+            handle_result.is_ok(),
+            "handle() failed: {}",
+            handle_result.err().unwrap()
+        );
+
+        let vk1 = ViewingKey("key1".to_string());
+        let vk2 = ViewingKey("key2".to_string(
