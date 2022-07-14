@@ -1932,4 +1932,11 @@ mod tests {
         );
 
         let handle_msg = HandleMsg::IncreaseAllowance {
-            spender: HumanAddr("lebron".to_string(
+            spender: HumanAddr("lebron".to_string()),
+            amount: Uint128(2000),
+            padding: None,
+            expiration: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("giannis", &[]), handle_msg);
+        assert!(
+    
