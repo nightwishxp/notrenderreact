@@ -1952,4 +1952,10 @@ mod tests {
             spender: HumanAddr("lebron".to_string()),
             key: vk1.0.clone(),
         };
-        let qu
+        let query_result = query(&deps, query_msg);
+        assert!(
+            query_result.is_ok(),
+            "Query failed: {}",
+            query_result.err().unwrap()
+        );
+        let error = extract_error
