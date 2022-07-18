@@ -1958,4 +1958,11 @@ mod tests {
             "Query failed: {}",
             query_result.err().unwrap()
         );
-        let error = extract_error
+        let error = extract_error_msg(query_result);
+        assert!(error.contains("Wrong viewing key"));
+
+        let handle_msg = HandleMsg::SetViewingKey {
+            key: vk1.0.clone(),
+            padding: None,
+        };
+        let handl
