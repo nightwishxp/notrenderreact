@@ -1945,4 +1945,11 @@ mod tests {
         );
 
         let vk1 = ViewingKey("key1".to_string());
-        let vk2 = ViewingKey("key2".to_string(
+        let vk2 = ViewingKey("key2".to_string());
+
+        let query_msg = QueryMsg::Allowance {
+            owner: HumanAddr("giannis".to_string()),
+            spender: HumanAddr("lebron".to_string()),
+            key: vk1.0.clone(),
+        };
+        let qu
