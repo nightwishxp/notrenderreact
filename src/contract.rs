@@ -1965,4 +1965,8 @@ mod tests {
             key: vk1.0.clone(),
             padding: None,
         };
-        let handl
+        let handle_result = handle(&mut deps, mock_env("lebron", &[]), handle_msg);
+        let unwrapped_result: HandleAnswer =
+            from_binary(&handle_result.unwrap().data.unwrap()).unwrap();
+        assert_eq!(
+  
