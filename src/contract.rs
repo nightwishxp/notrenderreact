@@ -1991,4 +1991,9 @@ mod tests {
             .unwrap(),
         );
 
-        let query_msg = Query
+        let query_msg = QueryMsg::Allowance {
+            owner: HumanAddr("giannis".to_string()),
+            spender: HumanAddr("lebron".to_string()),
+            key: vk1.0.clone(),
+        };
+        let query_result = query(&deps, query_
