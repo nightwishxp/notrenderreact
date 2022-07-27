@@ -1996,4 +1996,9 @@ mod tests {
             spender: HumanAddr("lebron".to_string()),
             key: vk1.0.clone(),
         };
-        let query_result = query(&deps, query_
+        let query_result = query(&deps, query_msg);
+        let allowance = match from_binary(&query_result.unwrap()).unwrap() {
+            QueryAnswer::Allowance { allowance, .. } => allowance,
+            _ => panic!("Unexpected"),
+        };
+    
