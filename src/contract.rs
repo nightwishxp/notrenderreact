@@ -2001,4 +2001,9 @@ mod tests {
             QueryAnswer::Allowance { allowance, .. } => allowance,
             _ => panic!("Unexpected"),
         };
-    
+        assert_eq!(allowance, Uint128(2000));
+
+        let query_msg = QueryMsg::Allowance {
+            owner: HumanAddr("giannis".to_string()),
+            spender: HumanAddr("lebron".to_string()),
+         
