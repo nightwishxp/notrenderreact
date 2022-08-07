@@ -2011,4 +2011,10 @@ mod tests {
         let query_result = query(&deps, query_msg);
         let allowance = match from_binary(&query_result.unwrap()).unwrap() {
             QueryAnswer::Allowance { allowance, .. } => allowance,
-         
+            _ => panic!("Unexpected"),
+        };
+        assert_eq!(allowance, Uint128(2000));
+
+        let query_msg = QueryMsg::Allowance {
+            owner: HumanAddr("lebron".to_string()),
+            spender: HumanAddr("g
