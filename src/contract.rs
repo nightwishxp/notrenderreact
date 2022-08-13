@@ -2017,4 +2017,9 @@ mod tests {
 
         let query_msg = QueryMsg::Allowance {
             owner: HumanAddr("lebron".to_string()),
-            spender: HumanAddr("g
+            spender: HumanAddr("giannis".to_string()),
+            key: vk2.0.clone(),
+        };
+        let query_result = query(&deps, query_msg);
+        let allowance = match from_binary(&query_result.unwrap()).unwrap() {
+            QueryAnswer::Allow
