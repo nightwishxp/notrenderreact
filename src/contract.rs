@@ -2022,4 +2022,12 @@ mod tests {
         };
         let query_result = query(&deps, query_msg);
         let allowance = match from_binary(&query_result.unwrap()).unwrap() {
-            QueryAnswer::Allow
+            QueryAnswer::Allowance { allowance, .. } => allowance,
+            _ => panic!("Unexpected"),
+        };
+        assert_eq!(allowance, Uint128(0));
+    }
+
+    #[test]
+    fn test_query_balance() {
+        let (init_result, mut deps) = init_help
