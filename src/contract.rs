@@ -2061,4 +2061,10 @@ mod tests {
         };
         let query_result = query(&deps, query_msg);
         let error = extract_error_msg(query_result);
-        assert!(error.contains("Wr
+        assert!(error.contains("Wrong viewing key"));
+
+        let query_msg = QueryMsg::Balance {
+            address: HumanAddr("bob".to_string()),
+            key: "key".to_string(),
+        };
+        let query_result = query(&deps,
