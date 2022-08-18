@@ -2048,4 +2048,12 @@ mod tests {
         let unwrapped_result: HandleAnswer =
             from_binary(&handle_result.unwrap().data.unwrap()).unwrap();
         assert_eq!(
-            to_binary(&unwrapped_result).unwrap()
+            to_binary(&unwrapped_result).unwrap(),
+            to_binary(&HandleAnswer::SetViewingKey {
+                status: ResponseStatus::Success
+            })
+            .unwrap(),
+        );
+
+        let query_msg = QueryMsg::Balance {
+            address: Hum
