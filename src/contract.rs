@@ -2072,4 +2072,11 @@ mod tests {
             QueryAnswer::Balance { amount } => amount,
             _ => panic!("Unexpected"),
         };
-        as
+        assert_eq!(balance, Uint128(5000));
+    }
+
+    #[test]
+    fn test_query_transfer_history() {
+        let (init_result, mut deps) = init_helper(vec![InitialBalance {
+            address: HumanAddr("bob".to_string()),
+       
