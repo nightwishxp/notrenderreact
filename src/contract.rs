@@ -2067,4 +2067,9 @@ mod tests {
             address: HumanAddr("bob".to_string()),
             key: "key".to_string(),
         };
-        let query_result = query(&deps,
+        let query_result = query(&deps, query_msg);
+        let balance = match from_binary(&query_result.unwrap()).unwrap() {
+            QueryAnswer::Balance { amount } => amount,
+            _ => panic!("Unexpected"),
+        };
+        as
