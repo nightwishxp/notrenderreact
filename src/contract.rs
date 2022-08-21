@@ -2098,4 +2098,8 @@ mod tests {
             recipient: HumanAddr("alice".to_string()),
             amount: Uint128(1000),
             padding: None,
-        }
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        let result = handle_result.unwrap();
+        assert!(ensure_success(result));
+        let handle_msg 
