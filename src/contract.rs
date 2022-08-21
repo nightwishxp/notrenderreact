@@ -2087,4 +2087,9 @@ mod tests {
             init_result.err().unwrap()
         );
 
-        let handle_msg
+        let handle_msg = HandleMsg::SetViewingKey {
+            key: "key".to_string(),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
+        assert
