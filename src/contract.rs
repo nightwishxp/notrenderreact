@@ -2102,4 +2102,9 @@ mod tests {
         let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_msg);
         let result = handle_result.unwrap();
         assert!(ensure_success(result));
-        let handle_msg 
+        let handle_msg = HandleMsg::Transfer {
+            recipient: HumanAddr("banana".to_string()),
+            amount: Uint128(500),
+            padding: None,
+        };
+        let handle_result = handle(&mut deps, mock_env("bob", &[]), handle_m
