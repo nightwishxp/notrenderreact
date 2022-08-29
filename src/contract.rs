@@ -2123,4 +2123,9 @@ mod tests {
             address: HumanAddr("bob".to_string()),
             key: "key".to_string(),
             page: None,
-            page_size:
+            page_size: 0,
+        };
+        let query_result = query(&deps, query_msg);
+        // let a: QueryAnswer = from_binary(&query_result.unwrap()).unwrap();
+        // println!("{:?}", a);
+        let transf
