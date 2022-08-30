@@ -2128,4 +2128,10 @@ mod tests {
         let query_result = query(&deps, query_msg);
         // let a: QueryAnswer = from_binary(&query_result.unwrap()).unwrap();
         // println!("{:?}", a);
-        let transf
+        let transfers = match from_binary(&query_result.unwrap()).unwrap() {
+            QueryAnswer::TransferHistory { txs } => txs,
+            _ => panic!("Unexpected"),
+        };
+        assert!(transfers.is_empty());
+
+  
