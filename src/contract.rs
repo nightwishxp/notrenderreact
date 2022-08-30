@@ -2134,4 +2134,10 @@ mod tests {
         };
         assert!(transfers.is_empty());
 
-  
+        let query_msg = QueryMsg::TransferHistory {
+            address: HumanAddr("bob".to_string()),
+            key: "key".to_string(),
+            page: None,
+            page_size: 10,
+        };
+        let query_result = 
