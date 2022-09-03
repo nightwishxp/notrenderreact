@@ -2140,4 +2140,7 @@ mod tests {
             page: None,
             page_size: 10,
         };
-        let query_result = 
+        let query_result = query(&deps, query_msg);
+        let transfers = match from_binary(&query_result.unwrap()).unwrap() {
+            QueryAnswer::TransferHistory { txs } => txs,
+            _ => panic!("Un
