@@ -2143,4 +2143,12 @@ mod tests {
         let query_result = query(&deps, query_msg);
         let transfers = match from_binary(&query_result.unwrap()).unwrap() {
             QueryAnswer::TransferHistory { txs } => txs,
-            _ => panic!("Un
+            _ => panic!("Unexpected"),
+        };
+        assert_eq!(transfers.len(), 3);
+
+        let query_msg = QueryMsg::TransferHistory {
+            address: HumanAddr("bob".to_string()),
+            key: "key".to_string(),
+            page: None,
+ 
