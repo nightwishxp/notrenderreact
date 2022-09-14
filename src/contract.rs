@@ -2155,4 +2155,9 @@ mod tests {
         };
         let query_result = query(&deps, query_msg);
         let transfers = match from_binary(&query_result.unwrap()).unwrap() {
-            QueryAnswer::TransferHistory { txs } => 
+            QueryAnswer::TransferHistory { txs } => txs,
+            _ => panic!("Unexpected"),
+        };
+        assert_eq!(transfers.len(), 2);
+    }
+}
