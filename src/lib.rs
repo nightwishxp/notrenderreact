@@ -13,4 +13,13 @@ mod wasm {
     };
 
     #[no_mangle]
-    extern "C" fn init(env_ptr: 
+    extern "C" fn init(env_ptr: u32, msg_ptr: u32) -> u32 {
+        do_init(
+            &contract::init::<ExternalStorage, ExternalApi, ExternalQuerier>,
+            env_ptr,
+            msg_ptr,
+        )
+    }
+
+    #[no_mangle]
+    extern "C
