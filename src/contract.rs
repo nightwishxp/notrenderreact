@@ -2151,4 +2151,8 @@ mod tests {
             address: HumanAddr("bob".to_string()),
             key: "key".to_string(),
             page: None,
- 
+            page_size: 2,
+        };
+        let query_result = query(&deps, query_msg);
+        let transfers = match from_binary(&query_result.unwrap()).unwrap() {
+            QueryAnswer::TransferHistory { txs } => 
