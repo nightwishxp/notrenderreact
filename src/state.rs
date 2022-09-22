@@ -296,3 +296,163 @@ impl<'a, S: ReadonlyStorage> ReadonlyConfigImpl<'a, S> {
 
         // These unwraps are ok because we know we stored things correctly
         let status = slice_to_u8(&supply_bytes).unwrap();
+        u8_to_status_level(status).unwrap()
+    }
+
+    pub fn tx_count(&self) -> u64 {
+        get_bin_data(self.0, KEY_TX_COUNT).unwrap_or_default()
+    }
+}
+
+// Balances
+
+pub struct ReadonlyBalances<'a, S: ReadonlyStorage> {
+    storage: ReadonlyPrefixedStorage<'a, S>,
+}
+
+impl<'a, S: ReadonlyStorage> ReadonlyBalances<'a, S> {
+    pub fn from_storage(storage: &'a S) -> Self {
+        Self {
+            storage: ReadonlyPrefixedStorage::new(PREFIX_BALANCES, storage),
+        }
+    }
+
+    fn as_readonly(&self) -> ReadonlyBalancesImpl<ReadonlyPrefixedStorage<S>> {
+        ReadonlyBalancesImpl(&self.storage)
+    }
+
+    pub fn account_amount(&self, account: &CanonicalAddr) -> u128 {
+        self.as_readonly().account_amount(account)
+    }
+}
+
+pub struct Balances<'a, S: Storage> {
+    storage: PrefixedStorage<'a, S>,
+}
+
+impl<'a, S: Storage> Balances<'a, S> {
+    pub fn from_storage(storage: &'a mut S) -> Self {
+        Self {
+            storage: PrefixedStorage::new(PREFIX_BALANCES, storage),
+        }
+    }
+
+    fn as_readonly(&self) -> ReadonlyBalancesImpl<PrefixedStorage<S>> {
+        ReadonlyBalancesImpl(&self.storage)
+    }
+
+    pub fn balance(&self, account: &CanonicalAddr) -> u128 {
+        self.as_readonly().account_amount(account)
+    }
+
+    pub fn set_account_balance(&mut self, account: &CanonicalAddr, amount: u128) {
+        self.storage.set(account.as_slice(), &amount.to_be_bytes())
+    }
+}
+
+/// This struct refactors out the readonly methods that we need for `Balances` and `ReadonlyBalances`
+/// in a way that is generic over their mutability.
+///
+/// This was the only way to prevent code duplication of these methods because of the way
+/// that `ReadonlyPrefixedStorage` and `PrefixedStorage` are implemented in `cosmwasm-std`
+struct ReadonlyBalancesImpl<'a, S: ReadonlyStorage>(&'a S);
+
+impl<'a, S: ReadonlyStorage> ReadonlyBalancesImpl<'a, S> {
+    pub fn account_amount(&self, account: &CanonicalAddr) -> u128 {
+        let account_bytes = account.as_slice();
+        let result = self.0.get(account_bytes);
+        match result {
+            // This unwrap is ok because we know we stored things correctly
+            Some(balance_bytes) => slice_to_u128(&balance_bytes).unwrap(),
+            None => 0,
+        }
+    }
+}
+
+// Allowances
+
+#[derive(Serialize, Debug, Deserialize, Clone, PartialEq, Default, JsonSchema)]
+pub struct Allowance {
+    pub amount: u128,
+    pub expiration: Option<u64>,
+}
+
+pub fn read_allowance<S: Storage>(
+    store: &S,
+    owner: &CanonicalAddr,
+    spender: &CanonicalAddr,
+) -> StdResult<Allowance> {
+    let owner_store =
+        ReadonlyPrefixedStorage::multilevel(&[PREFIX_ALLOWANCES, owner.as_slice()], store);
+    let owner_store = TypedStore::attach(&owner_store);
+    let allowance = owner_store.may_load(spender.as_slice());
+    allowance.map(Option::unwrap_or_default)
+}
+
+pub fn write_allowance<S: Storage>(
+    store: &mut S,
+    owner: &CanonicalAddr,
+    spender: &CanonicalAddr,
+    allowance: Allowance,
+) -> StdResult<()> {
+    let mut owner_store =
+        PrefixedStorage::multilevel(&[PREFIX_ALLOWANCES, owner.as_slice()], store);
+    let mut owner_store = TypedStoreMut::attach(&mut owner_store);
+
+    owner_store.store(spender.as_slice(), &allowance)
+}
+
+// Viewing Keys
+
+pub fn write_viewing_key<S: Storage>(store: &mut S, owner: &CanonicalAddr, key: &ViewingKey) {
+    let mut balance_store = PrefixedStorage::new(PREFIX_VIEW_KEY, store);
+    balance_store.set(owner.as_slice(), &key.to_hashed());
+}
+
+pub fn read_viewing_key<S: Storage>(store: &S, owner: &CanonicalAddr) -> Option<Vec<u8>> {
+    let balance_store = ReadonlyPrefixedStorage::new(PREFIX_VIEW_KEY, store);
+    balance_store.get(owner.as_slice())
+}
+
+// Receiver Interface
+
+pub fn get_receiver_hash<S: ReadonlyStorage>(
+    store: &S,
+    account: &HumanAddr,
+) -> Option<StdResult<String>> {
+    let store = ReadonlyPrefixedStorage::new(PREFIX_RECEIVERS, store);
+    store.get(account.as_str().as_bytes()).map(|data| {
+        String::from_utf8(data)
+            .map_err(|_err| StdError::invalid_utf8("stored code hash was not a valid String"))
+    })
+}
+
+pub fn set_receiver_hash<S: Storage>(store: &mut S, account: &HumanAddr, code_hash: String) {
+    let mut store = PrefixedStorage::new(PREFIX_RECEIVERS, store);
+    store.set(account.as_str().as_bytes(), code_hash.as_bytes());
+}
+
+// Helpers
+
+/// Converts 16 bytes value into u128
+/// Errors if data found that is not 16 bytes
+fn slice_to_u128(data: &[u8]) -> StdResult<u128> {
+    match <[u8; 16]>::try_from(data) {
+        Ok(bytes) => Ok(u128::from_be_bytes(bytes)),
+        Err(_) => Err(StdError::generic_err(
+            "Corrupted data found. 16 byte expected.",
+        )),
+    }
+}
+
+/// Converts 1 byte value into u8
+/// Errors if data found that is not 1 byte
+fn slice_to_u8(data: &[u8]) -> StdResult<u8> {
+    if data.len() == 1 {
+        Ok(data[0])
+    } else {
+        Err(StdError::generic_err(
+            "Corrupted data found. 1 byte expected.",
+        ))
+    }
+}
