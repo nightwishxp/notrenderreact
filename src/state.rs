@@ -107,3 +107,192 @@ pub fn store_transfer<S: Storage>(
 
     Ok(())
 }
+
+fn append_tx<S: Storage>(
+    store: &mut S,
+    tx: StoredTx,
+    for_address: &CanonicalAddr,
+) -> StdResult<()> {
+    let mut store = PrefixedStorage::multilevel(&[PREFIX_TXS, for_address.as_slice()], store);
+    let mut store = AppendStoreMut::attach_or_create(&mut store)?;
+    store.push(&tx)
+}
+
+pub fn get_transfers<A: Api, S: ReadonlyStorage>(
+    api: &A,
+    storage: &S,
+    for_address: &CanonicalAddr,
+    page: u32,
+    page_size: u32,
+) -> StdResult<Vec<Tx>> {
+    let store = ReadonlyPrefixedStorage::multilevel(&[PREFIX_TXS, for_address.as_slice()], storage);
+
+    // Try to access the storage of txs for the account.
+    // If it doesn't exist yet, return an empty list of transfers.
+    let store = if let Some(result) = AppendStore::<StoredTx, _>::attach(&store) {
+        result?
+    } else {
+        return Ok(vec![]);
+    };
+
+    // Take `page_size` txs starting from the latest tx, potentially skipping `page * page_size`
+    // txs from the start.
+    let tx_iter = store
+        .iter()
+        .rev()
+        .skip((page * page_size) as _)
+        .take(page_size as _);
+    // The `and_then` here flattens the `StdResult<StdResult<Tx>>` to an `StdResult<Tx>`
+    let txs: StdResult<Vec<Tx>> = tx_iter
+        .map(|tx| tx.map(|tx| tx.into_humanized(api)).and_then(|x| x))
+        .collect();
+    txs
+}
+
+// Config
+
+#[derive(Serialize, Debug, Deserialize, Clone, PartialEq, JsonSchema)]
+pub struct Constants {
+    pub name: String,
+    pub admin: HumanAddr,
+    pub symbol: String,
+    pub decimals: u8,
+    pub prng_seed: Vec<u8>,
+    // privacy configuration
+    pub total_supply_is_public: bool,
+}
+
+pub struct ReadonlyConfig<'a, S: ReadonlyStorage> {
+    storage: ReadonlyPrefixedStorage<'a, S>,
+}
+
+impl<'a, S: ReadonlyStorage> ReadonlyConfig<'a, S> {
+    pub fn from_storage(storage: &'a S) -> Self {
+        Self {
+            storage: ReadonlyPrefixedStorage::new(PREFIX_CONFIG, storage),
+        }
+    }
+
+    fn as_readonly(&self) -> ReadonlyConfigImpl<ReadonlyPrefixedStorage<S>> {
+        ReadonlyConfigImpl(&self.storage)
+    }
+
+    pub fn constants(&self) -> StdResult<Constants> {
+        self.as_readonly().constants()
+    }
+
+    pub fn total_supply(&self) -> u128 {
+        self.as_readonly().total_supply()
+    }
+
+    pub fn contract_status(&self) -> ContractStatusLevel {
+        self.as_readonly().contract_status()
+    }
+
+    pub fn tx_count(&self) -> u64 {
+        self.as_readonly().tx_count()
+    }
+}
+
+fn set_bin_data<T: Serialize, S: Storage>(storage: &mut S, key: &[u8], data: &T) -> StdResult<()> {
+    let bin_data =
+        bincode2::serialize(&data).map_err(|e| StdError::serialize_err(type_name::<T>(), e))?;
+
+    storage.set(key, &bin_data);
+    Ok(())
+}
+
+fn get_bin_data<T: DeserializeOwned, S: ReadonlyStorage>(storage: &S, key: &[u8]) -> StdResult<T> {
+    let bin_data = storage.get(key);
+
+    match bin_data {
+        None => Err(StdError::not_found("Key not found in storage")),
+        Some(bin_data) => Ok(bincode2::deserialize::<T>(&bin_data)
+            .map_err(|e| StdError::serialize_err(type_name::<T>(), e))?),
+    }
+}
+
+pub struct Config<'a, S: Storage> {
+    storage: PrefixedStorage<'a, S>,
+}
+
+impl<'a, S: Storage> Config<'a, S> {
+    pub fn from_storage(storage: &'a mut S) -> Self {
+        Self {
+            storage: PrefixedStorage::new(PREFIX_CONFIG, storage),
+        }
+    }
+
+    fn as_readonly(&self) -> ReadonlyConfigImpl<PrefixedStorage<S>> {
+        ReadonlyConfigImpl(&self.storage)
+    }
+
+    pub fn constants(&self) -> StdResult<Constants> {
+        self.as_readonly().constants()
+    }
+
+    pub fn set_constants(&mut self, constants: &Constants) -> StdResult<()> {
+        set_bin_data(&mut self.storage, KEY_CONSTANTS, constants)
+    }
+
+    pub fn total_supply(&self) -> u128 {
+        self.as_readonly().total_supply()
+    }
+
+    pub fn set_total_supply(&mut self, supply: u128) {
+        self.storage.set(KEY_TOTAL_SUPPLY, &supply.to_be_bytes());
+    }
+
+    pub fn contract_status(&self) -> ContractStatusLevel {
+        self.as_readonly().contract_status()
+    }
+
+    pub fn set_contract_status(&mut self, status: ContractStatusLevel) {
+        let status_u8 = status_level_to_u8(status);
+        self.storage
+            .set(KEY_CONTRACT_STATUS, &status_u8.to_be_bytes());
+    }
+
+    pub fn tx_count(&self) -> u64 {
+        self.as_readonly().tx_count()
+    }
+
+    pub fn set_tx_count(&mut self, count: u64) -> StdResult<()> {
+        set_bin_data(&mut self.storage, KEY_TX_COUNT, &count)
+    }
+}
+
+/// This struct refactors out the readonly methods that we need for `Config` and `ReadonlyConfig`
+/// in a way that is generic over their mutability.
+///
+/// This was the only way to prevent code duplication of these methods because of the way
+/// that `ReadonlyPrefixedStorage` and `PrefixedStorage` are implemented in `cosmwasm-std`
+struct ReadonlyConfigImpl<'a, S: ReadonlyStorage>(&'a S);
+
+impl<'a, S: ReadonlyStorage> ReadonlyConfigImpl<'a, S> {
+    fn constants(&self) -> StdResult<Constants> {
+        let consts_bytes = self
+            .0
+            .get(KEY_CONSTANTS)
+            .ok_or_else(|| StdError::generic_err("no constants stored in configuration"))?;
+        bincode2::deserialize::<Constants>(&consts_bytes)
+            .map_err(|e| StdError::serialize_err(type_name::<Constants>(), e))
+    }
+
+    fn total_supply(&self) -> u128 {
+        let supply_bytes = self
+            .0
+            .get(KEY_TOTAL_SUPPLY)
+            .expect("no total supply stored in config");
+        // This unwrap is ok because we know we stored things correctly
+        slice_to_u128(&supply_bytes).unwrap()
+    }
+
+    fn contract_status(&self) -> ContractStatusLevel {
+        let supply_bytes = self
+            .0
+            .get(KEY_CONTRACT_STATUS)
+            .expect("no contract status stored in config");
+
+        // These unwraps are ok because we know we stored things correctly
+        let status = slice_to_u8(&supply_bytes).unwrap();
