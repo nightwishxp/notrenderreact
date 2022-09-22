@@ -282,3 +282,43 @@ pub fn u8_to_status_level(status_level: u8) -> StdResult<ContractStatusLevel> {
         2 => Ok(ContractStatusLevel::StopAll),
         _ => Err(StdError::generic_err("Invalid state level")),
     }
+}
+
+// Take a Vec<u8> and pad it up to a multiple of `block_size`, using spaces at the end.
+pub fn space_pad(block_size: usize, message: &mut Vec<u8>) -> &mut Vec<u8> {
+    let len = message.len();
+    let surplus = len % block_size;
+    if surplus == 0 {
+        return message;
+    }
+
+    let missing = block_size - surplus;
+    message.reserve(missing);
+    message.extend(std::iter::repeat(b' ').take(missing));
+    message
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use cosmwasm_std::{from_slice, StdResult};
+
+    #[derive(Serialize, Deserialize, JsonSchema, Debug, PartialEq)]
+    #[serde(rename_all = "snake_case")]
+    pub enum Something {
+        Var { padding: Option<String> },
+    }
+
+    #[test]
+    fn test_deserialization_of_missing_option_fields() -> StdResult<()> {
+        let input = b"{ \"var\": {} }";
+        let obj: Something = from_slice(input)?;
+        assert_eq!(
+            obj,
+            Something::Var { padding: None },
+            "unexpected value: {:?}",
+            obj
+        );
+        Ok(())
+    }
+}
