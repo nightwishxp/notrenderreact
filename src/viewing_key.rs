@@ -28,4 +28,15 @@ impl ViewingKey {
         rng_entropy.extend_from_slice(&env.block.height.to_be_bytes());
         rng_entropy.extend_from_slice(&env.block.time.to_be_bytes());
         rng_entropy.extend_from_slice(&env.message.sender.0.as_bytes());
-        rng_entropy.extend_from_slice(
+        rng_entropy.extend_from_slice(entropy);
+
+        let mut rng = Prng::new(seed, &rng_entropy);
+
+        let rand_slice = rng.rand_bytes();
+
+        let key = sha_256(&rand_slice);
+
+        Self(VIEWING_KEY_PREFIX.to_string() + &base64::encode(key))
+    }
+
+    pub
