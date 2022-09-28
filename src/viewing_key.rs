@@ -39,4 +39,13 @@ impl ViewingKey {
         Self(VIEWING_KEY_PREFIX.to_string() + &base64::encode(key))
     }
 
-    pub
+    pub fn to_hashed(&self) -> [u8; VIEWING_KEY_SIZE] {
+        create_hashed_password(&self.0)
+    }
+
+    pub fn as_bytes(&self) -> &[u8] {
+        self.0.as_bytes()
+    }
+}
+
+impl fmt::Display for ViewingKe
