@@ -55,4 +55,11 @@ dependencies = [
  "base64",
  "schemars",
  "serde",
- "ser
+ "serde-json-wasm",
+ "snafu",
+]
+
+[[package]]
+name = "cosmwasm-storage"
+version = "0.10.0"
+source = "git+https://github.com/enigmampc/SecretNetwork?tag=v1.0.0#490fba9243e6cb291462e9d3c1bcbd1975c0df
