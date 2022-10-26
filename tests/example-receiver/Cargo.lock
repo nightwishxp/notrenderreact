@@ -95,4 +95,14 @@ checksum = "aa7087f49d294270db4e1928fc110c976cd4b9e5a16348e0a1df09afa99e6c98"
 [[package]]
 name = "miniz_oxide"
 version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c60c0dfe32c10b43a144bad8fc83538c52f58302c92300ea7ec7bf7b38d5a7b9"
+dependencies = [
+ "adler",
+ "autocfg",
+]
+
+[[package]]
+name = "object"
+version = "0.20.0"
 source = "registry+https
