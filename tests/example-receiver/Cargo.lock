@@ -153,4 +153,15 @@ checksum = "71d301d4193d031abdd79ff7e3dd721168a9572ef3fe51a1517aba235bd8f86e"
 name = "schemars"
 version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "be77ed66abed6954aabf6a3e31a8470
+checksum = "be77ed66abed6954aabf6a3e31a84706bedbf93750d267e92ef4a6d90bbd6a61"
+dependencies = [
+ "schemars_derive",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "schemars_derive"
+version = "0.7.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "
