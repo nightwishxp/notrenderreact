@@ -227,4 +227,14 @@ dependencies = [
 name = "snafu"
 version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c4e6046e4691afe918fd1b603fd6e515bcda5
+checksum = "9c4e6046e4691afe918fd1b603fd6e515bcda5388a1092a9edbada307d159f09"
+dependencies = [
+ "backtrace",
+ "doc-comment",
+ "snafu-derive",
+]
+
+[[package]]
+name = "snafu-derive"
+version = "0.6.9"
+source = "registry+https://github.com/rust-l
