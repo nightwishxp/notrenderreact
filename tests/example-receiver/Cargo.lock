@@ -237,4 +237,15 @@ dependencies = [
 [[package]]
 name = "snafu-derive"
 version = "0.6.9"
-source = "registry+https://github.com/rust-l
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7073448732a89f2f3e6581989106067f403d378faeafb4a50812eb814170d3e5"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "syn"
+version = "1.0.42"
+source = "regi
