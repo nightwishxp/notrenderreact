@@ -15,4 +15,15 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
     let state = State {
         count: msg.count,
         owner: deps.api.canonical_address(&env.message.sender)?,
-        known_snip_20:
+        known_snip_20: vec![],
+    };
+
+    config(&mut deps.storage).save(&state)?;
+
+    Ok(InitResponse::default())
+}
+
+pub fn handle<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    msg: HandleM
