@@ -31,4 +31,10 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
     match msg {
         HandleMsg::Increment {} => try_increment(deps, env),
         HandleMsg::Reset { count } => try_reset(deps, env, count),
-        HandleMsg::Registe
+        HandleMsg::Register { reg_addr, reg_hash } => try_register(deps, env, reg_addr, reg_hash),
+        HandleMsg::Receive {
+            sender,
+            from,
+            amount,
+            msg,
+        } => try_receive(deps, env, sende
