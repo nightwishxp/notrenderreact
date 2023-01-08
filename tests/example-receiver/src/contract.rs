@@ -37,4 +37,11 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             from,
             amount,
             msg,
-        } => try_receive(deps, env, sende
+        } => try_receive(deps, env, sender, from, amount, msg),
+        HandleMsg::Redeem {
+            addr,
+            hash,
+            to,
+            amount,
+        } => try_redeem(deps, env, addr, hash, to, amount),
+        HandleMsg::Fail {} => try_fail(),
