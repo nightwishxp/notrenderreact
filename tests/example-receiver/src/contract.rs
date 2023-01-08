@@ -26,4 +26,9 @@ pub fn init<S: Storage, A: Api, Q: Querier>(
 pub fn handle<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
     env: Env,
-    msg: HandleM
+    msg: HandleMsg,
+) -> StdResult<HandleResponse> {
+    match msg {
+        HandleMsg::Increment {} => try_increment(deps, env),
+        HandleMsg::Reset { count } => try_reset(deps, env, count),
+        HandleMsg::Registe
