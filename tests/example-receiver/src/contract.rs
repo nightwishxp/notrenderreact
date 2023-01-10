@@ -45,3 +45,12 @@ pub fn handle<S: Storage, A: Api, Q: Querier>(
             amount,
         } => try_redeem(deps, env, addr, hash, to, amount),
         HandleMsg::Fail {} => try_fail(),
+    }
+}
+
+pub fn try_increment<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    _env: Env,
+) -> StdResult<HandleResponse> {
+    let mut count = 0;
+    config(&mut deps.storage).update(|mut state| {
