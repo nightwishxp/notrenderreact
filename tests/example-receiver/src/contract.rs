@@ -54,3 +54,15 @@ pub fn try_increment<S: Storage, A: Api, Q: Querier>(
 ) -> StdResult<HandleResponse> {
     let mut count = 0;
     config(&mut deps.storage).update(|mut state| {
+        state.count += 1;
+        count = state.count;
+        Ok(state)
+    })?;
+
+    let mut context = Context::new();
+    context.add_log("count", count.to_string());
+
+    Ok(context.into())
+}
+
+pub fn
