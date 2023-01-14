@@ -65,4 +65,9 @@ pub fn try_increment<S: Storage, A: Api, Q: Querier>(
     Ok(context.into())
 }
 
-pub fn
+pub fn try_reset<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    count: i32,
+) -> StdResult<HandleResponse> {
+    let sender_address_raw = deps.api.canonical_address(&env.message.sender
