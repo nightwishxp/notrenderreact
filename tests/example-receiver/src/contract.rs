@@ -76,4 +76,14 @@ pub fn try_reset<S: Storage, A: Api, Q: Querier>(
             return Err(StdError::Unauthorized { backtrace: None });
         }
         state.count = count;
-        Ok(stat
+        Ok(state)
+    })?;
+    Ok(HandleResponse::default())
+}
+
+pub fn try_register<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    reg_addr: HumanAddr,
+    reg_hash: String,
+) -> StdResult<H
