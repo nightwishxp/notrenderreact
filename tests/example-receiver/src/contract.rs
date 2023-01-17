@@ -92,4 +92,11 @@ pub fn try_register<S: Storage, A: Api, Q: Querier>(
     if !state.known_snip_20.contains(&reg_addr) {
         state.known_snip_20.push(reg_addr.clone());
     }
-    conf.save(&sta
+    conf.save(&state)?;
+
+    let msg = to_binary(&Snip20Msg::register_receive(env.contract_code_hash))?;
+    let message = CosmosMsg::Wasm(WasmMsg::Execute {
+        contract_addr: reg_addr,
+        callback_code_hash: reg_hash,
+        msg,
+        s
