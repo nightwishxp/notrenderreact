@@ -86,4 +86,10 @@ pub fn try_register<S: Storage, A: Api, Q: Querier>(
     env: Env,
     reg_addr: HumanAddr,
     reg_hash: String,
-) -> StdResult<H
+) -> StdResult<HandleResponse> {
+    let mut conf = config(&mut deps.storage);
+    let mut state = conf.load()?;
+    if !state.known_snip_20.contains(&reg_addr) {
+        state.known_snip_20.push(reg_addr.clone());
+    }
+    conf.save(&sta
