@@ -111,3 +111,12 @@ pub fn try_register<S: Storage, A: Api, Q: Querier>(
 
 pub fn try_receive<S: Storage, A: Api, Q: Querier>(
     deps: &mut Extern<S, A, Q>,
+    env: Env,
+    _sender: HumanAddr,
+    _from: HumanAddr,
+    _amount: Uint128,
+    msg: Binary,
+) -> StdResult<HandleResponse> {
+    let msg: HandleMsg = from_binary(&msg)?;
+
+    if matches!(msg, Handle
