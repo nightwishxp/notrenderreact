@@ -99,4 +99,15 @@ pub fn try_register<S: Storage, A: Api, Q: Querier>(
         contract_addr: reg_addr,
         callback_code_hash: reg_hash,
         msg,
-        s
+        send: vec![],
+    });
+
+    Ok(HandleResponse {
+        messages: vec![message],
+        log: vec![],
+        data: None,
+    })
+}
+
+pub fn try_receive<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
