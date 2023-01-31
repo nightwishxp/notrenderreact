@@ -119,4 +119,11 @@ pub fn try_receive<S: Storage, A: Api, Q: Querier>(
 ) -> StdResult<HandleResponse> {
     let msg: HandleMsg = from_binary(&msg)?;
 
-    if matches!(msg, Handle
+    if matches!(msg, HandleMsg::Receive { .. }) {
+        return Err(StdError::generic_err(
+            "Recursive call to receive() is not allowed",
+        ));
+    }
+
+    let state = config_read(&deps.storage).load()?;
+    if !state.known_s
