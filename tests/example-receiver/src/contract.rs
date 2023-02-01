@@ -126,4 +126,12 @@ pub fn try_receive<S: Storage, A: Api, Q: Querier>(
     }
 
     let state = config_read(&deps.storage).load()?;
-    if !state.known_s
+    if !state.known_snip_20.contains(&env.message.sender) {
+        return Err(StdError::generic_err(format!(
+            "{} is not a known SNIP-20 coin that this contract registered to",
+            env.message.sender
+        )));
+    }
+
+    /* use sender & amount */
+    h
