@@ -134,4 +134,14 @@ pub fn try_receive<S: Storage, A: Api, Q: Querier>(
     }
 
     /* use sender & amount */
-    h
+    handle(deps, env, msg)
+}
+
+fn try_redeem<S: Storage, A: Api, Q: Querier>(
+    deps: &mut Extern<S, A, Q>,
+    env: Env,
+    addr: HumanAddr,
+    hash: String,
+    to: HumanAddr,
+    amount: Uint128,
+) -> StdResult<HandleRes
