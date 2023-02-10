@@ -149,4 +149,12 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     if !state.known_snip_20.contains(&addr) {
         return Err(StdError::generic_err(format!(
             "{} is not a known SNIP-20 coin that this contract registered to",
-     
+            addr
+        )));
+    }
+
+    let msg = to_binary(&Snip20Msg::redeem(amount))?;
+    let secret_redeem = CosmosMsg::Wasm(WasmMsg::Execute {
+        contract_addr: addr,
+        callback_code_hash: hash,
+   
