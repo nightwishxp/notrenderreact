@@ -144,4 +144,9 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     hash: String,
     to: HumanAddr,
     amount: Uint128,
-) -> StdResult<HandleRes
+) -> StdResult<HandleResponse> {
+    let state = config_read(&deps.storage).load()?;
+    if !state.known_snip_20.contains(&addr) {
+        return Err(StdError::generic_err(format!(
+            "{} is not a known SNIP-20 coin that this contract registered to",
+     
