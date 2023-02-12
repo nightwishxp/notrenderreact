@@ -157,4 +157,10 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     let secret_redeem = CosmosMsg::Wasm(WasmMsg::Execute {
         contract_addr: addr,
         callback_code_hash: hash,
-   
+        msg,
+        send: vec![],
+    });
+    let redeem = CosmosMsg::Bank(BankMsg::Send {
+        amount: vec![Coin::new(amount.u128(), "uscrt")],
+        from_address: env.contract.address,
+        to_add
