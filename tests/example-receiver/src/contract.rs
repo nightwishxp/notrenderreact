@@ -163,4 +163,15 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
     let redeem = CosmosMsg::Bank(BankMsg::Send {
         amount: vec![Coin::new(amount.u128(), "uscrt")],
         from_address: env.contract.address,
-        to_add
+        to_address: to,
+    });
+
+    Ok(HandleResponse {
+        messages: vec![secret_redeem, redeem],
+        log: vec![],
+        data: None,
+    })
+}
+
+fn try_fail() -> StdResult<HandleResponse> {
+    Err(StdError::generic_err("intentional fa
