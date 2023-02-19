@@ -174,4 +174,12 @@ fn try_redeem<S: Storage, A: Api, Q: Querier>(
 }
 
 fn try_fail() -> StdResult<HandleResponse> {
-    Err(StdError::generic_err("intentional fa
+    Err(StdError::generic_err("intentional failure"))
+}
+
+pub fn query<S: Storage, A: Api, Q: Querier>(
+    deps: &Extern<S, A, Q>,
+    msg: QueryMsg,
+) -> StdResult<Binary> {
+    match msg {
+        QueryMsg::GetCount {} => to_binary(&query_count(deps)?),
