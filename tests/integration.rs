@@ -1,3 +1,3 @@
 #[test]
 #[ignore]
-fn empty_test
+fn empty_test() {}
