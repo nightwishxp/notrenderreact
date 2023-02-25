@@ -810,3 +810,209 @@ function test_transfer_from() {
     # Check for both "a", "b", and "c" that they recorded the transfer
     local tx
     local -A tx_ids
+    for key in a b c; do
+        log "querying the transfer history of \"$key\""
+        transfer_history_query='{"transfer_history":{"address":"'"${ADDRESS[$key]}"'","key":"'"${VK[$key]}"'","page_size":1}}'
+        transfer_history_response="$(compute_query "$contract_addr" "$transfer_history_query")"
+        txs="$(jq -r '.transfer_history.txs' <<<"$transfer_history_response")"
+        silent jq -e 'length == 1' <<<"$txs" # just make sure we're not getting a weird response
+        tx="$(jq -r '.[0]' <<<"$txs")"
+        assert_eq "$(jq -r '.from' <<<"$tx")" "${ADDRESS[a]}"
+        assert_eq "$(jq -r '.sender' <<<"$tx")" "${ADDRESS[b]}"
+        assert_eq "$(jq -r '.receiver' <<<"$tx")" "${ADDRESS[c]}"
+        assert_eq "$(jq -r '.coins.amount' <<<"$tx")" 400000
+        assert_eq "$(jq -r '.coins.denom' <<<"$tx")" 'SSCRT'
+        tx_ids[$key]="$(jq -r '.id' <<<"$tx")"
+    done
+
+    assert_eq "${tx_ids[a]}" "${tx_ids[b]}"
+    assert_eq "${tx_ids[b]}" "${tx_ids[c]}"
+    log 'The transfer was recorded correctly in the transaction history'
+
+    # Check that "a" has fewer funds
+    assert_eq "$(get_balance "$contract_addr" 'a')" 600000
+
+    # Check that "b" has the same funds still, but less allowance
+    assert_eq "$(get_balance "$contract_addr" 'b')" 0
+    assert_eq "$(get_allowance "$contract_addr" 'a' 'b')" 600000
+
+    # Check that "c" has the funds that "b" deposited from "a"
+    assert_eq "$(get_balance "$contract_addr" 'c')" 400000
+
+    # Redeem both accounts
+    redeem "$contract_addr" a 600000
+    redeem "$contract_addr" c 400000
+    # Reset allowance
+    assert_eq "$(decrease_allowance "$contract_addr" 'a' 'b' 600000)" 0
+    assert_eq "$(get_allowance "$contract_addr" 'a' 'b')" 0
+    # Send the funds back
+    secretcli tx send c "${ADDRESS[a]}" 400000uscrt -y -b block >/dev/null
+}
+
+function test_send_from() {
+    local contract_addr="$1"
+
+    log_test_header
+
+    local receiver_addr
+    receiver_addr="$(create_receiver_contract)"
+#    receiver_addr='secret17k8qt6aqd7eee3fawmtvy4vu6teqx8d7mdm49x'
+    register_receiver "$receiver_addr" "$contract_addr"
+
+    local tx_hash
+
+    # Check "a" and "b" don't have any funds
+    assert_eq "$(get_balance "$contract_addr" 'a')" 0
+    assert_eq "$(get_balance "$contract_addr" 'b')" 0
+    assert_eq "$(get_balance "$contract_addr" 'c')" 0
+
+    # Check that the allowance given to "b" by "a" is zero
+    assert_eq "$(get_allowance "$contract_addr" 'a' 'b')" 0
+
+    # Deposit to "a"
+    deposit "$contract_addr" 'a' 1000000
+
+    # Make "a" give allowance to "b"
+    assert_eq "$(increase_allowance "$contract_addr" 'a' 'b' 1000000)" 1000000
+    assert_eq "$(get_allowance "$contract_addr" 'a' 'b')" 1000000
+
+    # TTry to send from "a", using "b" more than "a" has allowed
+    log 'sending funds from "a" to "c" using "b", but more than "a" has allowed'
+    local send_message='{"send_from":{"owner":"'"${ADDRESS[a]}"'","recipient":"'"${ADDRESS[c]}"'","amount":"1000001"}}'
+    local send_response
+    tx_hash="$(compute_execute "$contract_addr" "$send_message" ${FROM[b]} --gas 150000)"
+    # Notice the `!` before the command - it is EXPECTED to fail.
+    ! send_response="$(wait_for_compute_tx "$tx_hash" 'waiting for send from "a" to "c" by "b" to process')"
+    log "trying to overdraft from \"a\" to send to \"c\" using \"b\" was rejected"
+    assert_eq "$(get_generic_err "$send_response")" "insufficient allowance: allowance=1000000, required=1000001"
+
+    # Check both a and b, that their last transaction is not for 1000001 uscrt
+    local transfer_history_query
+    local transfer_history_response
+    local txs
+    for key in a b c; do
+        log "querying the transfer history of \"$key\""
+        transfer_history_query='{"transfer_history":{"address":"'"${ADDRESS[$key]}"'","key":"'"${VK[$key]}"'","page_size":1}}'
+        transfer_history_response="$(compute_query "$contract_addr" "$transfer_history_query")"
+        txs="$(jq -r '.transfer_history.txs' <<<"$transfer_history_response")"
+        silent jq -e 'length <= 1' <<<"$txs" # just make sure we're not getting a weird response
+        if silent jq -e 'length == 1' <<<"$txs"; then
+            assert_ne "$(jq -r '.[0].coins.amount' <<<"$txs")" 1000001
+        fi
+    done
+
+    # Query receiver state before Send
+    local receiver_state
+    local receiver_state_query='{"get_count":{}}'
+    receiver_state="$(compute_query "$receiver_addr" "$receiver_state_query")"
+    local original_count
+    original_count="$(jq -r '.count' <<<"$receiver_state")"
+
+    # Send from "a", using "b", to the receiver with message to the Receiver
+    log 'sending funds from "a", using "b", to the Receiver, with message to the Receiver'
+    local receiver_msg='{"increment":{}}'
+    receiver_msg="$(base64 <<<"$receiver_msg")"
+    local send_message='{"send_from":{"owner":"'"${ADDRESS[a]}"'","recipient":"'"$receiver_addr"'","amount":"400000","msg":"'$receiver_msg'"}}'
+    local send_response
+    tx_hash="$(compute_execute "$contract_addr" "$send_message" ${FROM[b]} --gas 300000)"
+    send_response="$(wait_for_compute_tx "$tx_hash" 'waiting for send from "a" to the Receiver to process')"
+    assert_eq \
+        "$(jq -r '.output_log[0].attributes[] | select(.key == "count") | .value' <<<"$send_response")" \
+        "$((original_count + 1))"
+    log 'received send response'
+
+    # Check that the receiver got the message
+    log 'checking whether state was updated in the receiver'
+    receiver_state_query='{"get_count":{}}'
+    receiver_state="$(compute_query "$receiver_addr" "$receiver_state_query")"
+    local new_count
+    new_count="$(jq -r '.count' <<<"$receiver_state")"
+    assert_eq "$((original_count + 1))" "$new_count"
+    log 'receiver contract received the message'
+
+    # Check that "a" recorded the transfer
+    local tx
+    local -A tx_ids
+    for key in a b; do
+        log "querying the transfer history of \"$key\""
+        transfer_history_query='{"transfer_history":{"address":"'"${ADDRESS[$key]}"'","key":"'"${VK[$key]}"'","page_size":1}}'
+        transfer_history_response="$(compute_query "$contract_addr" "$transfer_history_query")"
+        txs="$(jq -r '.transfer_history.txs' <<<"$transfer_history_response")"
+        silent jq -e 'length == 1' <<<"$txs" # just make sure we're not getting a weird response
+        tx="$(jq -r '.[0]' <<<"$txs")"
+        assert_eq "$(jq -r '.from' <<<"$tx")" "${ADDRESS[a]}"
+        assert_eq "$(jq -r '.sender' <<<"$tx")" "${ADDRESS[b]}"
+        assert_eq "$(jq -r '.receiver' <<<"$tx")" "$receiver_addr"
+        assert_eq "$(jq -r '.coins.amount' <<<"$tx")" 400000
+        assert_eq "$(jq -r '.coins.denom' <<<"$tx")" 'SSCRT'
+        tx_ids[$key]="$(jq -r '.id' <<<"$tx")"
+    done
+
+    assert_eq "${tx_ids[a]}" "${tx_ids[b]}"
+    log 'The transfer was recorded correctly in the transaction history'
+
+    # Check that "a" has fewer funds
+    assert_eq "$(get_balance "$contract_addr" 'a')" 600000
+
+    # Check that "b" has the same funds still, but less allowance
+    assert_eq "$(get_balance "$contract_addr" 'b')" 0
+    assert_eq "$(get_allowance "$contract_addr" 'a' 'b')" 600000
+
+    # Test that send callback failure also denies the transfer
+    log 'sending funds from "a", using "b", to the Receiver, with a "Fail" message to the Receiver'
+    receiver_msg='{"fail":{}}'
+    receiver_msg="$(base64 <<<"$receiver_msg")"
+    send_message='{"send_from":{"owner":"'"${ADDRESS[a]}"'", "recipient":"'"$receiver_addr"'","amount":"400000","msg":"'$receiver_msg'"}}'
+    tx_hash="$(compute_execute "$contract_addr" "$send_message" ${FROM[b]} --gas 300000)"
+    # Notice the `!` before the command - it is EXPECTED to fail.
+    ! send_response="$(wait_for_compute_tx "$tx_hash" 'waiting for send from "a" to the Receiver to process')"
+    assert_eq "$(get_generic_err "$send_response")" 'intentional failure' # This comes from the receiver contract
+
+    # Check that "a" does not have fewer funds
+    assert_eq "$(get_balance "$contract_addr" 'a')" 600000 # This is the same balance as before
+
+    log 'a failure in the callback caused the transfer to roll back, as expected'
+
+    # redeem both accounts
+    redeem "$contract_addr" 'a' 600000
+    redeem_receiver "$receiver_addr" "$contract_addr" "${ADDRESS[a]}" 400000
+    # Reset allowance
+    assert_eq "$(decrease_allowance "$contract_addr" 'a' 'b' 600000)" 0
+    assert_eq "$(get_allowance "$contract_addr" 'a' 'b')" 0
+}
+
+function main() {
+    log '              <####> Starting integration tests <####>'
+    log "secretcli version in the docker image is: $(secretcli version)"
+
+    local prng_seed
+    prng_seed="$(base64 <<<'enigma-rocks')"
+    local init_msg
+    init_msg='{"name":"secret-secret","admin":"'"${ADDRESS[a]}"'","symbol":"SSCRT","decimals":6,"initial_balances":[],"prng_seed":"'"$prng_seed"'","config":{"public_total_supply":true}}'
+    contract_addr="$(create_contract '.' "$init_msg")"
+
+    # To make testing faster, check the logs and try to reuse the deployed contract and VKs from previous runs.
+    # Remember to comment out the contract deployment and `test_viewing_key` if you do.
+#    local contract_addr='secret18vd8fpwxzck93qlwghaj6arh4p7c5n8978vsyg'
+#    VK[a]='api_key_Ij3ZwkDOTqMPnmCLGn3F2uX0pMpETw2LTyCkQ0sDMv8='
+#    VK[b]='api_key_hV3SlzQMC4YK50GbDrpbjicGOMQpolfPI+O6pMp6oQY='
+#    VK[c]='api_key_7Bv00UvQCkZ7SltDn205R0GBugq/l8GnRX6N0JIBQuA='
+#    VK[d]='api_key_A3Y3mFe87d2fEq90kNlPSIUSmVgoao448ZpyDAJkB/4='
+
+    log "contract address: $contract_addr"
+
+    # This first test also sets the `VK[*]` global variables that are used in the other tests
+    test_viewing_key "$contract_addr"
+    test_deposit "$contract_addr"
+    test_transfer "$contract_addr"
+    test_send "$contract_addr"
+    test_transfer_from "$contract_addr"
+    test_send_from "$contract_addr"
+
+    log 'Tests completed successfully'
+
+    # If everything else worked, return successful status
+    return 0
+}
+
+main "$@"
